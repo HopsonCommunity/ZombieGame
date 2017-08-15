@@ -21,12 +21,13 @@ add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
 
 # SFML
 add_definitions(-DSFML_STATIC)
-set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML_ROOT ${CMAKE_SOURCE_DIR}/deps/SFML)
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-find_package(SFML 2 COMPONENTS audio network graphics window system REQUIRED)
-include_directories(${SFML_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+set(SFML_BUILD_DOC OFF CACHE BOOL "" FORCE)
+set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(CMAKE_BUILD_TYPE Debug)
+add_subdirectory(deps/SFML)
+include_directories(deps/SFML/include)
+target_link_libraries(${PROJECT_NAME} sfml-network sfml-graphics sfml-window sfml-system sfml-audio)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 14

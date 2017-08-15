@@ -29,26 +29,12 @@ the code, clone the repository with
 
 ## Preparation
 
-#### Windows
-Go to https://www.sfml-dev.org/download.php and click on SFML 2.x.x
-There you can see a list of download buttons. Download the 32 Bit version of the
-library your compiler needs.
-**Note:** This README only covers the 2017 Version of Visual Studio, as it has an integrated
-version of CMake. If you want to work with VS 2017 you will need to download the
-VS 2015 libraries because they are compatible with VS 2017 and SFML doesnt
-distribute VS 2017 libraries.
-
-Now unzip the contents of the SFML-2.x.x folder into the deps/SFML folder.
-It should look similar to this:
-<img src="http://i.imgur.com/Q27AG5W.png" />
-
 #### Linux
-Install the SFML 2.x.x development packages from your distribution's package
-manager.
+As SFML will be built from sources, you have to have the SFML dependencies installed.
+Ubuntu/Debian: ``sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
 
-Debian/Ubuntu: `sudo apt-get install libsfml-dev`
-
-#### Mac is currently not supported as it is untested
+Other distributions will follow. Here you can find all the depenency names
+https://www.sfml-dev.org/tutorials/2.4/compile-with-cmake.php
 
 ## Compiling with Visual Studio
 In Visual Studio, click on ``File->Open->Folder`` and select the root project folder.

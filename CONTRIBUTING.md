@@ -39,7 +39,7 @@ The first step to this is to add another remote to our local repository.
 
 Enter this in the shell:
 
-`git remote add upstream https://github.com/Hopson97/Community-Game`
+`git remote add upstream https://github.com/HopsonCommunity/ZombieGame`
 
 Now the original repository where we forked from is now being added as another
 remote. That means we can pull all the changes from that remote into our own
