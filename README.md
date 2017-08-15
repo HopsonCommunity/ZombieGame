@@ -43,10 +43,12 @@ It should look similar to this:
 <img src="http://i.imgur.com/Q27AG5W.png" />
 
 #### Linux
-Install the SFML 2.x.x development packages from your distribution's package
-manager.
-
-Debian/Ubuntu: `sudo apt-get install libsfml-dev`
+To download the latest SFML package for this project you need to execute following commands:
+```
+wget https://www.sfml-dev.org/files/SFML-2.4.2-linux-gcc-64-bit.tar.gz
+tar -xvzf SFML-2.4.2-linux-gcc-64-bit.tar.gz
+mv SFML-2.4.2/* repository-path/deps/SFML/ 
+```
 
 #### Mac is currently not supported as it is untested
 
