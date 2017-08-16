@@ -1,8 +1,6 @@
 # Community-Game
-Made by my subscribers :) - Matthew Hopson
-
-This project is a project maintained by Matt Hopson's subscriber community/server
-and is an attempt at making a brand-spanking-new collaborative game together.
+This game is the second series of the community games by Matthew Hopson's Discord Community.
+This round, we're replicating a Zombie game that we found online.
 
 # How to join us
 
