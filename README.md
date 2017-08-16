@@ -15,21 +15,29 @@ look at [`CONTRIBUTING.md`](CONTRIBUTING.md). The document will tell you how you
 files with git, and how to contribute your code back into this
 main repository.
 
-Also take a look at the [`CODESTYLE.md`](CODESTYLE.md) file. It tells you how you should program
-when you want your Pull Request mergerd into the project.
+There is also an easier way using the renewed desktop app "Github for Desktop", but this is not yet documented by anyone. 
+You can follow the command instructions in the GUI app, however, as the backend to the GUI app is the Git command line. Therefor,
+the Github GUII app will have all the same features and buttons as Git (but git has them command-wise.)
+
+Also take a look at the [`CODESTYLE.md`](CODESTYLE.md) file. 
+This file makes it clear which coding-format is acceptable in this repository.
+Pull Requests not conforming to the coding standard will be rejected. 
+A rejected pull request can be re-opened when the code has been changed and is conforming.
 
 # Compiling the project
 
-First, get the repsoitory downloaded to your computer. If you just want to look at
-the code, clone the repository with
+First, download the repository to your local machine.
 
 `git clone --recursive https://github.com/HopsonCommunity/ZombieGame`
 
 ## Preparation
 
 #### Linux
-As SFML will be built from sources, you have to have the SFML dependencies installed.
-Ubuntu/Debian: ``sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
+As SFML will be built from sources, you will be required to have the SFML sources.
+Debian-based(eg. Lubuntu, Xubuntu, Ubuntu, ...): ``sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
+
+Arch Linux-based(eg. Manjaro): ``sudo pacman -S -Y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
+The -y parameter works by automatically accepting the requests for approval.
 
 Other distributions will follow. Here you can find all the depenency names
 https://www.sfml-dev.org/tutorials/2.4/compile-with-cmake.php
@@ -39,10 +47,9 @@ In Visual Studio, click on ``File->Open->Folder`` and select the root project fo
 Visual Studio should detect the CMakeLists.txt file. It prints the CMake log into
 the console. It should look like this:
 <img src="http://i.imgur.com/WPpcCj7.png" />
-If it doesnt, you maybe have downloaded the wrong libraries or failed pasting them
-into the right folder.
+:::If there are any errors, please check that you have copied over the dependencies to the right folder.:::
 Next, click on the Dropdown arrow at the Launch-Button and select the game.
-Now you can launch it.
+The project will now be compiled and executed.
 
 ## Compiling in CLion
 Go to ``FILE->Import Project`` and select the root project folder.
@@ -59,10 +66,10 @@ The IDE reads the CMakeLists.txt and compiles the program.
 Make sure you have MINGW with a c++ compiler, make installed in your path.
 Install CMake from their official website and add it to the PATH.
 
-**Note:** for the game to be correctly executed on Windows you will need to install OpenAL, check OpenAL at https://openal.org/downloads/ and download the latest installer.
+**Note:** For the game to be correctly executed on Windows you will need to install OpenAL, check OpenAL at https://openal.org/downloads/ and download the latest installer.
 
 #### Linux
-Get a working C++ compiler, make and CMake from your distribution's package manager.
+Install aC++ compiler, make and CMake using your distribution's package manager.
 
 #### Mac is currently not supported as it is untested
 
@@ -85,9 +92,9 @@ and your files will be compiled.
 ## Program crashes when launching?
 
 Most likely it will happen because you wont have the res/ folder where the
-execute relies. Just copy the folder to your build/ folder and you should be most
-likely good to go.
+executable files lie. Just copy the folder to your build/ folder and this will
+most likely get you up and running again.
 
-If there are still error, go to our Discord and ask for help.
+If you're unable to resolve your errors, feel free to contact us on Discord!
 
 HAVE FUN CODING!
