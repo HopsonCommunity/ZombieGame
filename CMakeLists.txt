@@ -7,8 +7,7 @@ project(Zombie-Shooter)
 # Add all files from the source/ folder to CMake
 file(GLOB_RECURSE SRC
     "src/*.cpp"
-    "src/*.h"
-    "src/*.hpp"
+    "src/state/.cpp"
 )
 
 # Define the executable
