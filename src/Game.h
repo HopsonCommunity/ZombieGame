@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory>
 
-class GameState{};
+#include "state/GameState.h"
 
 class Game
 {

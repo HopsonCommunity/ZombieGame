@@ -11,13 +11,13 @@ class GameState
         GameState(Game& game)
         :   m_pGame (&game){}
 
-        virtual void handleEvents(sf::Event e) = 0;
-        virtual void handleInput () = 0;
+        virtual void handleEvents(sf::Event e)              = 0;
+        virtual void handleInput ()                         = 0;
 
         virtual void update     (const sf::Time& deltaTime) = 0;
         virtual void fixedUpdate(const sf::Time& deltaTime) = 0;
 
-        virtual void render(sf::RenderTarget& renderTarget);
+        virtual void render(sf::RenderTarget& renderTarget) = 0;
 
     protected:
         Game* m_pGame;

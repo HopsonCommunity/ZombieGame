@@ -1,8 +1,10 @@
 #include "Game.h"
 
+#include "state/PlayingState.h"
+
 Game::Game()
 {
-
+    pushState<PlayingState>(*this);
 }
 
 void Game::runGame()
