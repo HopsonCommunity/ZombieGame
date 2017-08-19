@@ -62,7 +62,9 @@
 		<Unit filename="sfml-system-d-2.dll" />
 		<Unit filename="sfml-window-2.dll" />
 		<Unit filename="sfml-window-d-2.dll" />
-		<Unit filename="src/Main.cpp" />
+		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/Game.h" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
