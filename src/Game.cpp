@@ -14,8 +14,13 @@ void Game::runGame()
     {
         auto& state = getCurrentState();
 
-        m_window.clear();
+        state.handleInput();
+        state.update(timer.restart());
 
+        //fixed update here
+
+        m_window.clear();
+        state.render(m_window);
         m_window.display();
         tryPop();
         handleEvents(); //done last so that window closing does not cause crash
@@ -51,11 +56,11 @@ void Game::tryPop()
 
 void Game::handleEvents()
 {
-    auto& state = getCurrentState();
     sf::Event event;
 
     while (m_window.pollEvent(event))
     {
+        getCurrentState().handleEvents(event);
         switch (event.type)
         {
             case sf::Event::Closed:
