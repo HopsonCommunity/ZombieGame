@@ -34,3 +34,10 @@
 # CMake build folder
 build/
 .vs
+
+#CodeBlocks
+*.layout
+*.depend
+*.cbp
+bin/
+obj/
