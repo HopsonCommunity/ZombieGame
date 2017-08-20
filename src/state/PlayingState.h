@@ -1,5 +1,4 @@
-#ifndef PLAYINGSTATE_H_INCLUDED
-#define PLAYINGSTATE_H_INCLUDED
+#pragma once
 
 #include "GameState.h"
 
@@ -20,5 +19,3 @@ class PlayingState: public GameState
 
 
 };
-
-#endif // PLAYINGSTATE_H_INCLUDED

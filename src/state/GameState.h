@@ -1,15 +1,17 @@
-#ifndef GAMESTATE_H_INCLUDED
-#define GAMESTATE_H_INCLUDED
+#pragma once
 
 #include <SFML/Graphics.hpp>
+#include "../util/NonCopyable.h"
 
 class Game;
 
-class GameState
+class GameState : public NonCopyable
 {
     public:
         GameState(Game& game)
         :   m_pGame (&game){}
+
+        ~GameState() = default;
 
         virtual void handleEvents(sf::Event e)              = 0;
         virtual void handleInput ()                         = 0;
@@ -22,5 +24,3 @@ class GameState
     protected:
         Game* m_pGame;
 };
-
-#endif // GAMESTATE_H_INCLUDED
