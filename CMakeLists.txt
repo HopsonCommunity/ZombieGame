@@ -17,6 +17,9 @@ add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
 
+# JSON library
+include_directories(deps/json)
+
 # SFML
 add_definitions(-DSFML_STATIC)
 set(SFML_BUILD_DOC OFF CACHE BOOL "" FORCE)
