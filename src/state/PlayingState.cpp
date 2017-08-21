@@ -1,34 +1,31 @@
 #include "PlayingState.h"
 
-namespace GameState
-{ 
-    PlayingState::PlayingState(Game& game)
-    :   GameState   (game)
-    { }
+PlayingState::PlayingState(Game& game)
+:   GameState   (game)
+{ }
 
 
-    void PlayingState::handleEvents(sf::Event e)
-    {
+void PlayingState::handleEvents(sf::Event e)
+{
 
-    }
+}
 
-    void PlayingState::handleInput()
-    {
+void PlayingState::handleInput()
+{
 
-    }
+}
 
-    void PlayingState::update(const sf::Time& deltaTime)
-    {
+void PlayingState::update(const sf::Time& deltaTime)
+{
 
-    }
+}
 
-    void PlayingState::fixedUpdate(const sf::Time& deltaTime)
-    {
+void PlayingState::fixedUpdate(const sf::Time& deltaTime)
+{
 
-    }
+}
 
-    void PlayingState::render(sf::RenderTarget& renderTarget)
-    {
+void PlayingState::render(sf::RenderTarget& renderTarget)
+{
 
-    }
 }

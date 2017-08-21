@@ -2,21 +2,19 @@
 
 #include "GameObject.h"
 
-namespace GameState {
-    class Game;
-}
+class Game;
 
-namespace GameObject {
-
-    class GameObjectFactory {
+class GameObjectFactory
+{
     public:
-        GameObjectFactory(GameState::Game& game);
+        GameObjectFactory(Game& game);
         std::unique_ptr<GameObject> createGameObject(std::string name);
+
     private:
         void createTemplate(std::string name);
-        std::unordered_map<std::string, std::unique_ptr<GameObject>> templates;
-        unsigned int m_last_ID;
-        GameState::Game& m_game;
-    };
 
-}
+        std::unordered_map<std::string, std::unique_ptr<GameObject>> templates;
+        unsigned  m_last_ID;
+        Game& m_game;
+};
+
