@@ -11,7 +11,7 @@ class TestComponent : public Component
         void setup() override;
         void update(sf::Time& deltaTime) override;
         void fixedUpdate(sf::Time& deltaTime) override;
-        void render(sf::RenderWindow& window) override;
+        void render(sf::RenderTarget& renderTarget) override;
         std::unique_ptr<Component> clone(GameObject& newGameObject) override;
 
         static unsigned int ID;

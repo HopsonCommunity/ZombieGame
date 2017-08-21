@@ -13,15 +13,14 @@
 std::string getFileContents(const std::string& filePath)
 {
 	std::string result;
-	std::ifstream ifs(filePath.c_str(), std::ios::binary);
+	std::ifstream ifs(filePath);
 	std::stringstream ss;
 
 	if (!ifs.is_open())
 	{
-		result.clear(); // Unable to read file
 		return result;
 	}
-
+/*
 	if (ifs.eof())
 		result.clear();
 	else
@@ -32,6 +31,7 @@ std::string getFileContents(const std::string& filePath)
 		if (!(ch1 == 0xef && ch2 == 0xbb && ch3 == 0xbf))
 			ifs.seekg(0);
 	}
+	*/
 	ss << ifs.rdbuf() << '\0';
 	result = ss.str();
 

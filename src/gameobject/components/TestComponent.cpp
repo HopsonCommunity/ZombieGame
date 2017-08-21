@@ -34,7 +34,7 @@ void TestComponent::fixedUpdate(sf::Time& deltaTime)
 
 }
 
-void TestComponent::render(sf::RenderWindow& renderWindow)
+void TestComponent::render(sf::RenderTarget& renderTarget)
 {
 
 }

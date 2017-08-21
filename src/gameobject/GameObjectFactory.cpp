@@ -5,7 +5,7 @@
 #include "components/TestComponent.h"
 #include "../Game.h"
 
-GameObjectFactory::GameObjectFactory(GameState::Game& game)
+GameObjectFactory::GameObjectFactory(Game& game)
 : m_last_ID(0)
 , m_game(game)
 {}
@@ -19,7 +19,7 @@ std::unique_ptr<GameObject> GameObjectFactory::createGameObject(std::string name
 
 void GameObjectFactory::createTemplate(std::string name)
 {
-    auto                = Util::getFileContents("res/gameobjects/" + name);
+    auto source         = getFileContents("res/gameobjects/" + name);
     auto json           = nlohmann::json::parse(source.c_str());
     auto gameObject     = std::make_unique<GameObject>(m_game.getCurrentState(), 0);
     auto componentsJSON = json["components"];
