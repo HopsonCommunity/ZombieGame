@@ -14,7 +14,7 @@ class TestComponent : public Component
         void render(sf::RenderTarget& renderTarget) override;
         std::unique_ptr<Component> clone(GameObject& newGameObject) override;
 
-        static unsigned int ID;
+        static unsigned ID;
 
         float SomeVal;
 };

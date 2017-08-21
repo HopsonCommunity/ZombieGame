@@ -10,14 +10,14 @@ GameObjectFactory::GameObjectFactory(Game& game)
 , m_game(game)
 {}
 
-std::unique_ptr<GameObject> GameObjectFactory::createGameObject(std::string name)
+std::unique_ptr<GameObject> GameObjectFactory::createGameObject(const std::string& name)
 {
     if (templates.find(name) == templates.end())
         createTemplate(name);
     return templates.find(name)->second->clone(m_game.getCurrentState(), ++m_last_ID);
 }
 
-void GameObjectFactory::createTemplate(std::string name)
+void GameObjectFactory::createTemplate(const std::string& name)
 {
     auto source         = getFileContents("res/gameobjects/" + name);
     auto json           = nlohmann::json::parse(source.c_str());
