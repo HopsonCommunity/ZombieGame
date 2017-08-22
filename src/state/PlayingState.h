@@ -2,10 +2,9 @@
 
 #include "GameState.h"
 
-namespace GameState
+
+class PlayingState: public GameState
 {
-    class PlayingState: public GameState
-    {
     public:
         PlayingState(Game& game);
 
@@ -18,6 +17,6 @@ namespace GameState
         void render(sf::RenderTarget& renderTarget) override;
 
     private:
-    
-    };
-}
+
+};
+

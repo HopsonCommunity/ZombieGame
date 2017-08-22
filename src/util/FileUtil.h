@@ -2,7 +2,5 @@
 
 #include <string>
 
-namespace Util
-{
-	std::string getFileContents(const std::string& filePath);
-}
+std::string getFileContents(const std::string& filePath);
+

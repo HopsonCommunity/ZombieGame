@@ -3,12 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include "../util/NonCopyable.h"
 
-namespace GameState
-{
-    class Game;
 
-    class GameState : public NonCopyable
-    {
+class Game;
+
+class GameState : public NonCopyable
+{
     public:
         GameState(Game& game)
         :   m_pGame (&game){}
@@ -25,5 +24,5 @@ namespace GameState
 
     protected:
         Game* m_pGame;
-    };
-}
+};
+

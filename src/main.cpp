@@ -7,7 +7,7 @@
 
 int main()
 {
-    GameState::Game game;
+    Game game;
     game.runGame();
 
     return 0;
