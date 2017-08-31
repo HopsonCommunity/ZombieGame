@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameState.h"
+#include "../Game.h"
 
 
 class PlayingState: public GameState
@@ -16,7 +17,13 @@ class PlayingState: public GameState
 
         void render(sf::RenderTarget& renderTarget) override;
 
+        void setup() override;
+
     private:
 
+        std::vector<std::shared_ptr<GameObject>> m_gameObjects;
+
+        std::shared_ptr<GameObject> m_player;
+        std::shared_ptr<GameObject> m_mouse;
 };
 

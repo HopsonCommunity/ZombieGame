@@ -24,12 +24,12 @@ void TestComponent::setup()
 
 }
 
-void TestComponent::update(sf::Time& deltaTime)
+void TestComponent::update(const sf::Time& deltaTime)
 {
 
 }
 
-void TestComponent::fixedUpdate(sf::Time& deltaTime)
+void TestComponent::fixed_update(const sf::Time &deltaTime)
 {
 
 }

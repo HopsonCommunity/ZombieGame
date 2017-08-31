@@ -1,0 +1,13 @@
+{
+  "components": [
+    {
+      "componentType": "Mouse"
+    },
+    {
+      "componentType": "Transform",
+      "position": [0,0],
+      "rotation": 270,
+      "renderTransform": true
+    }
+  ]
+}

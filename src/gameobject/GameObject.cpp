@@ -15,16 +15,22 @@ void GameObject::setup()
 		it.second->setup();
 }
 
-void GameObject::update(sf::Time& deltaTime)
+void GameObject::update(const sf::Time& deltaTime)
 {
 	for (auto& it : m_components)
 		it.second->update(deltaTime);
 }
 
-void GameObject::render(sf::RenderWindow& renderWindow)
+void GameObject::fixed_update(const sf::Time& deltaTime)
 {
 	for (auto& it : m_components)
-		it.second->render(renderWindow);
+		it.second->fixed_update(deltaTime);
+}
+
+void GameObject::render(sf::RenderTarget& renderTarget)
+{
+	for (auto& it : m_components)
+		it.second->render(renderTarget);
 }
 
 std::unique_ptr<GameObject> GameObject::clone(GameState& owningState, unsigned id)

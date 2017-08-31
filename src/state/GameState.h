@@ -20,7 +20,11 @@ class GameState : public NonCopyable
         virtual void update     (const sf::Time& deltaTime) = 0;
         virtual void fixedUpdate(const sf::Time& deltaTime) = 0;
 
+        virtual void setup() = 0;
+
         virtual void render(sf::RenderTarget& renderTarget) = 0;
+
+        Game* getGamePointer() { return m_pGame;}
 
     protected:
         Game* m_pGame;

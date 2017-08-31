@@ -38,10 +38,13 @@ class GameObject
         }
 
         void setup();
-        void update(sf::Time& deltaTime);
-        void render(sf::RenderWindow& renderWindow);
+        void update(const sf::Time& deltaTime);
+        void fixed_update(const sf::Time& deltaTime);
+        void render(sf::RenderTarget& renderTarget);
 
         std::unique_ptr<GameObject> clone(GameState& owningState, unsigned int id);
+
+        GameState& getOwningState() { return m_owningState;}
 
     private:
         std::unordered_map<unsigned int, std::unique_ptr<Component>> m_components;

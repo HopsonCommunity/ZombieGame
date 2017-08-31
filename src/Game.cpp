@@ -69,6 +69,11 @@ GameState& Game::getCurrentState()
     return *m_states.back();
 }
 
+GameObjectFactory& Game::getGameObjectFactory()
+{
+    return m_factory;
+}
+
 void Game::tryPop()
 {
     if (m_shouldPopState)
@@ -98,6 +103,11 @@ void Game::handleEvents()
                 break;
         }
     }
+}
+
+sf::RenderWindow& Game::getRenderWindow()
+{
+    return m_window;
 }
 
 

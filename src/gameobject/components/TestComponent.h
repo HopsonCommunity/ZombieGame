@@ -9,8 +9,8 @@ class TestComponent : public Component
         TestComponent(GameObject& owner, float someVal);
 
         void setup() override;
-        void update(sf::Time& deltaTime) override;
-        void fixedUpdate(sf::Time& deltaTime) override;
+        void update(const sf::Time& deltaTime) override;
+        void fixed_update(const sf::Time &deltaTime) override;
         void render(sf::RenderTarget& renderTarget) override;
         std::unique_ptr<Component> clone(GameObject& newGameObject) override;
 
