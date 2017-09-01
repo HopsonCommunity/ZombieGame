@@ -24,21 +24,21 @@ void PlayingState::handleInput()
 
 void PlayingState::update(const sf::Time& deltaTime)
 {
-    for (int i=0; i<m_gameObjects.size(); i++){
+    for (size_t i=0; i<m_gameObjects.size(); ++i){
         m_gameObjects[i]->update(deltaTime);
     }
 }
 
 void PlayingState::fixedUpdate(const sf::Time& deltaTime)
 {
-    for (int i=0; i<m_gameObjects.size(); i++){
+    for (size_t i=0; i<m_gameObjects.size(); ++i){
         m_gameObjects[i]->fixed_update(deltaTime);
     }
 }
 
 void PlayingState::render(sf::RenderTarget& renderTarget)
 {
-    for (int i=0; i<m_gameObjects.size(); i++){
+    for (size_t i=0; i<m_gameObjects.size(); ++i){
         m_gameObjects[i]->render(renderTarget);
     }
 }

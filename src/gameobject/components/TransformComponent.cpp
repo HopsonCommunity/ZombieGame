@@ -1,6 +1,5 @@
-#include <math.h>
-
 #include "TransformComponent.h"
+#include "../../util/Mathf.h"
 
 unsigned TransformComponent::ID = 2;
 
@@ -45,7 +44,7 @@ void TransformComponent::render(sf::RenderTarget& renderTarget)
 
         sf::CircleShape rotationIndicator = sf::CircleShape(2);
         rotationIndicator.setOrigin(rotationIndicator.getRadius(), rotationIndicator.getRadius());
-        rotationIndicator.setPosition(cos(rotation * M_PI / 180) * 10 + position.x, sin(rotation * M_PI / 180) * 10 + position.y);
+		rotationIndicator.setPosition(cos(math::radians(rotation)) * 10 + position.x, sin(math::radians(rotation)) * 10 + position.y);
         rotationIndicator.setFillColor(sf::Color::Red);
         renderTarget.draw(rotationIndicator);
     }
@@ -53,7 +52,7 @@ void TransformComponent::render(sf::RenderTarget& renderTarget)
 
 void TransformComponent::lookAt(TransformComponent* target)
 {
-    rotation = atan2((target->position.y - position.y),(target->position.x - position.x)) * 180 / M_PI;
+    rotation = math::degrees(atan2((target->position.y - position.y),(target->position.x - position.x)));
 }
 
 std::unique_ptr<Component> TransformComponent::clone(GameObject& newGameObject)
