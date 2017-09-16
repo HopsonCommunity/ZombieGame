@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <SFML/Graphics.hpp>
 
 int main()
@@ -19,6 +20,19 @@ int main()
         window.draw(shape);
         window.display();
     }
+=======
+#include "Game.h"
+
+#include "gameobject/GameObject.h"
+#include "gameobject/components/TestComponent.h"
+
+#include <memory>
+
+int main()
+{
+    Game game;
+    game.runGame();
+>>>>>>> 9990422359331f2330abfad091c9c755b5d21515
 
     return 0;
 }
