@@ -97,4 +97,4 @@ most likely get you up and running again.
 
 If you're unable to resolve your errors, feel free to contact us on Discord!
 
-HAVE FUN CODING!
+### HAVE FUN CODING!

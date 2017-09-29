@@ -12,7 +12,7 @@ file(GLOB_RECURSE SRC
 )
 
 # Define the executable
-add_executable(${PROJECT_NAME} ${SRC})
+add_executable(${PROJECT_NAME} ${SRC} src/gameobject/components/AnimationComponent.cpp src/gameobject/components/AnimationComponent.h)
 
 # Copy res folder to executable on build
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD

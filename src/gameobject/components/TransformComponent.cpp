@@ -52,7 +52,7 @@ void TransformComponent::render(sf::RenderTarget& renderTarget)
 
 void TransformComponent::lookAt(TransformComponent* target)
 {
-    rotation = math::degrees(atan2((target->position.y - position.y),(target->position.x - position.x)));
+    rotation = math::degrees(atan2((target->position.y - position.y), (target->position.x - position.x)));
 }
 
 std::unique_ptr<Component> TransformComponent::clone(GameObject& newGameObject)

@@ -47,8 +47,10 @@ void PlayingState::setup()
 {
     m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("mouse"));
     m_mouse = m_gameObjects.back();
-    m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("test"));
+    m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("player"));
     m_player = m_gameObjects.back();
+    m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("bd"));
+    m_building = m_gameObjects.back();
     m_player->getComponent<PlayerComponent>()->mouse = m_mouse->getComponent<TransformComponent>();
     m_mouse->getComponent<MouseComponent>()->cameraTransform = m_player->getComponent<TransformComponent>();
     m_mouse->getComponent<MouseComponent>()->cameraComponent = m_player->getComponent<CameraComponent>();

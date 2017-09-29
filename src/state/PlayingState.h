@@ -25,5 +25,6 @@ class PlayingState: public GameState
 
         std::shared_ptr<GameObject> m_player;
         std::shared_ptr<GameObject> m_mouse;
+        std::shared_ptr<GameObject> m_building;
 };
 

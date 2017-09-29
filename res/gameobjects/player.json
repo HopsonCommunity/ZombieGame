@@ -5,15 +5,18 @@
       "speed": 1
     },
     {
-      "componentType": "Renderer",
-      "texture": "player/Soldier",
+      "componentType": "Animation",
+      "FPS": 8,
+      "startFrame": 0,
+      "texture": "animations/player/Soldier",
       "offset_position": [16, 20],
       "offset_rotation": 90,
+      "frame_width": 32,
       "scale": [2, 2]
     },
     {
       "componentType": "Transform",
-      "position": [40, 40],
+      "position": [0, 0],
       "rotation": 0,
       "renderTransform": true
     },

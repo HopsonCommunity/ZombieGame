@@ -1,0 +1,17 @@
+{
+  "components": [
+    {
+      "componentType": "Renderer",
+      "texture": "building",
+      "offset_position": [16, 20],
+      "offset_rotation": 180,
+      "scale": [2, 2]
+    },
+    {
+      "componentType": "Transform",
+      "position": [50,40],
+      "rotation": 0,
+      "renderTransform": false
+    }
+  ]
+}
