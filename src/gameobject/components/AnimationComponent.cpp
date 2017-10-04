@@ -57,7 +57,6 @@ void AnimationComponent::update(const sf::Time& deltaTime)
             CurrentFrameID=0;
         }
         clock.restart();
-        std::cout<<CurrentFrameID<<std::endl;
     }
 }
 

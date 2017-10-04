@@ -27,6 +27,7 @@ void PlayingState::update(const sf::Time& deltaTime)
     for (size_t i=0; i<m_gameObjects.size(); ++i){
         m_gameObjects[i]->update(deltaTime);
     }
+    m_ColliderSpace.update(deltaTime);
 }
 
 void PlayingState::fixedUpdate(const sf::Time& deltaTime)
