@@ -16,7 +16,8 @@ public:
     
 private:
 
-    bool checkAABBCollision(ColliderAABBComponent const& c0, ColliderAABBComponent const& c1);
-     
+    void AABBCollision(ColliderAABBComponent& c0, ColliderAABBComponent& c1);
+    void resolveCollision(ColliderAABBComponent& c0, ColliderAABBComponent& c1, sf::Vector2f const& movement);
+    
     std::vector<ColliderAABBComponent*> m_colliders;
 };

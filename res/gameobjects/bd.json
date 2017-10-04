@@ -15,7 +15,8 @@
         {
             "componentType": "ColliderAABB",
             "neg_offset_position": [32, 25],
-            "dimension": [64, 60]
+            "dimension": [64, 60],
+            "static": true
         }
     ]
 }

@@ -6,9 +6,14 @@
 
 class ColliderAABBComponent : public Component
 {
+    static constexpr bool collider_wire_frame = false; // debug
 public:
+    enum class Constraint {
+        Static, Dynamic
+    };
+
     ColliderAABBComponent(GameObject& owner, nlohmann::json json);
-    ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension);
+    ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension, ColliderAABBComponent::Constraint constraint, float mass);
     ~ColliderAABBComponent();
 
     void setup() override;
@@ -28,6 +33,11 @@ public:
     float height() const;
 
     TransformComponent* transform;
+        
+    // On Collision
+    // TODO: Move to a Rigidbody component ?
+    Constraint constraint = Constraint::Dynamic;
+    float mass = 1;
     
 private:
 

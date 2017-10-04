@@ -9,10 +9,12 @@ ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, nlohmann::json j
 {
     dimension = sf::Vector2f(json["dimension"][0], json["dimension"][1]);
     offset_position = -sf::Vector2f(json["neg_offset_position"][0], json["neg_offset_position"][1]);
+    constraint = json.count("static") ? ColliderAABBComponent::Constraint::Static : ColliderAABBComponent::Constraint::Dynamic;
+    mass = json.count("mass") ? static_cast<float>(json["mass"]) : 1;    
 }
 
-ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension)
-    : Component(owner), offset_position(offset_position), dimension(dimension)
+ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension, ColliderAABBComponent::Constraint constraint, float mass)
+    : Component(owner), offset_position(offset_position), dimension(dimension), constraint(constraint), mass(mass)
 {
 
 }
@@ -40,17 +42,19 @@ void ColliderAABBComponent::fixed_update(sf::Time const& time)
 
 void ColliderAABBComponent::render(sf::RenderTarget& renderTarget) 
 {
-    sf::RectangleShape box(dimension);
-    box.setPosition(transform->position + offset_position);
-    box.setOutlineColor(sf::Color::Green);
-    box.setOutlineThickness(1);
-    box.setFillColor(sf::Color(0, 0, 0, 0));
-    renderTarget.draw(box);
+    if (ColliderAABBComponent::collider_wire_frame) {
+        sf::RectangleShape box(dimension);
+        box.setPosition(transform->position + offset_position);
+        box.setOutlineColor(sf::Color::Green);
+        box.setOutlineThickness(1);
+        box.setFillColor(sf::Color(0, 0, 0, 0));
+        renderTarget.draw(box);
+    }
 }
 
 std::unique_ptr<Component> ColliderAABBComponent::clone(GameObject& newGameObject)
 {
-    return std::make_unique<ColliderAABBComponent>(newGameObject, offset_position, dimension);
+    return std::make_unique<ColliderAABBComponent>(newGameObject, offset_position, dimension, constraint, mass);
 }
 
 float ColliderAABBComponent::left() const 

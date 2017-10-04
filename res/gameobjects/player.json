@@ -22,7 +22,8 @@
         {
             "componentType": "ColliderAABB",
             "neg_offset_position": [16, 16],
-            "dimension": [32, 32]
+            "dimension": [32, 32],
+            "mass": 1
         },
         {
             "componentType": "Camera",
