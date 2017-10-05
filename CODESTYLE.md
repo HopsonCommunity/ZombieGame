@@ -39,11 +39,10 @@ class Foo
 
 * Public functions and members at top, protected in middle, private at bottom
 * Notice a space between the final class member/function and the next accessor!
-<<<<<<< HEAD
+
 * Private members must be prefixed with "_m"
 =======
 * Private members must be prefixed with "m_"
->>>>>>> 9990422359331f2330abfad091c9c755b5d21515
 
 * Initilzation lists:
 
@@ -119,12 +118,9 @@ bool functionName(int arg1, const std::string& arg2)
 }
 ```
 
-<<<<<<< HEAD
 * For setter functions, use R-Value references and move scematics eg
 =======
 * For setter functions, use R-Value references and move scematics if you can(eg)
->>>>>>> 9990422359331f2330abfad091c9c755b5d21515
-
 ```C++
 void Foo:setString(std::string&& str)
 {
@@ -132,13 +128,11 @@ void Foo:setString(std::string&& str)
 }
 ```
 
-<<<<<<< HEAD
 =======
 or, plain old "const reference"
 
 However, if the setter is for an object <4 bytes in size (or 8 if your compiler is 64 bit), then pass by value
 
->>>>>>> 9990422359331f2330abfad091c9c755b5d21515
 ## Slash
 
 * Don't use the `\`, it can cause errors on Linux. Correct use:
@@ -164,7 +158,6 @@ auto y = std::make_unique<int>(5) //Yes!
 * If you have to use "new", then you are probably doing something wrong.
 =======
 * If you have to use "new" and especially "malloc()", then you are probably doing something wrong.
->>>>>>> 9990422359331f2330abfad091c9c755b5d21515
 * Only case raw pointers are fine is if they are non-owning pointers.
 
 ## Enums
