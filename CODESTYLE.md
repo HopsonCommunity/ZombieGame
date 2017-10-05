@@ -40,8 +40,6 @@ class Foo
 * Public functions and members at top, protected in middle, private at bottom
 * Notice a space between the final class member/function and the next accessor!
 
-* Private members must be prefixed with "_m"
-=======
 * Private members must be prefixed with "m_"
 
 * Initilzation lists:
@@ -118,8 +116,6 @@ bool functionName(int arg1, const std::string& arg2)
 }
 ```
 
-* For setter functions, use R-Value references and move scematics eg
-=======
 * For setter functions, use R-Value references and move scematics if you can(eg)
 ```C++
 void Foo:setString(std::string&& str)
@@ -128,7 +124,6 @@ void Foo:setString(std::string&& str)
 }
 ```
 
-=======
 or, plain old "const reference"
 
 However, if the setter is for an object <4 bytes in size (or 8 if your compiler is 64 bit), then pass by value
@@ -154,9 +149,6 @@ int* x = new int(5); //No!
 auto y = std::make_unique<int>(5) //Yes!
 ```
 
-<<<<<<< HEAD
-* If you have to use "new", then you are probably doing something wrong.
-=======
 * If you have to use "new" and especially "malloc()", then you are probably doing something wrong.
 * Only case raw pointers are fine is if they are non-owning pointers.
 
