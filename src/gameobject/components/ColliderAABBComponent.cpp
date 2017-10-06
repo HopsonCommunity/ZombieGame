@@ -1,6 +1,8 @@
 #include "ColliderAABBComponent.h"
+
 #include "../GameObject.h"
 #include "../../state/GameState.h"
+#include "RigidBodyComponent.h"
 
 unsigned int ColliderAABBComponent::ID = 7;
 
@@ -9,12 +11,10 @@ ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, nlohmann::json j
 {
     dimension = sf::Vector2f(json["dimension"][0], json["dimension"][1]);
     offset_position = -sf::Vector2f(json["neg_offset_position"][0], json["neg_offset_position"][1]);
-    constraint = json.count("static") ? ColliderAABBComponent::Constraint::Static : ColliderAABBComponent::Constraint::Dynamic;
-    mass = json.count("mass") ? static_cast<float>(json["mass"]) : 1;    
 }
 
-ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension, ColliderAABBComponent::Constraint constraint, float mass)
-    : Component(owner), offset_position(offset_position), dimension(dimension), constraint(constraint), mass(mass)
+ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension)
+    : Component(owner), offset_position(offset_position), dimension(dimension)
 {
 
 }
@@ -27,6 +27,7 @@ ColliderAABBComponent::~ColliderAABBComponent()
 void ColliderAABBComponent::setup()
 {
     transform = m_owner.getComponent<TransformComponent>();
+    rigidbody = m_owner.getComponent<RigidBodyComponent>();
     m_owner.getOwningState().getColliderSpace()->insert(*this);
 }
 
@@ -54,7 +55,7 @@ void ColliderAABBComponent::render(sf::RenderTarget& renderTarget)
 
 std::unique_ptr<Component> ColliderAABBComponent::clone(GameObject& newGameObject)
 {
-    return std::make_unique<ColliderAABBComponent>(newGameObject, offset_position, dimension, constraint, mass);
+    return std::make_unique<ColliderAABBComponent>(newGameObject, offset_position, dimension);
 }
 
 float ColliderAABBComponent::left() const 
