@@ -1,29 +1,34 @@
 {
-  "components" : [
-    {
-      "componentType": "Player",
-      "speed": 1
-    },
-    {
-      "componentType": "Animation",
-      "FPS": 8,
-      "startFrame": 0,
-      "texture": "animations/player/Soldier",
-      "offset_position": [16, 20],
-      "offset_rotation": 90,
-      "frame_width": 32,
-      "scale": [2, 2]
-    },
-    {
-      "componentType": "Transform",
-      "position": [0, 0],
-      "rotation": 0,
-      "renderTransform": true
-    },
-    {
-      "componentType": "Camera",
-      "position": [0, 0],
-      "resolution": [1280, 720]
-    }
-  ]
+    "components": [{
+            "componentType": "Player",
+            "speed": 1
+        },
+        {
+            "componentType": "Animation",
+            "FPS": 8,
+            "startFrame": 0,
+            "texture": "animations/player/Soldier",
+            "offset_position": [16, 20],
+            "offset_rotation": 90,
+            "frame_width": 32,
+            "scale": [2, 2]
+        },
+        {
+            "componentType": "Transform",
+            "position": [0, 0],
+            "rotation": 0,
+            "renderTransform": true
+        },
+        {
+            "componentType": "ColliderAABB",
+            "neg_offset_position": [16, 16],
+            "dimension": [32, 32],
+            "mass": 1
+        },
+        {
+            "componentType": "Camera",
+            "position": [0, 0],
+            "resolution": [1280, 720]
+        }
+    ]
 }

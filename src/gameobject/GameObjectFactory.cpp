@@ -10,6 +10,7 @@
 #include "components/MouseComponent.h"
 #include "components/CameraComponent.h"
 #include "components/AnimationComponent.h"
+#include "components/ColliderAABBComponent.h"
 
 GameObjectFactory::GameObjectFactory(Game& game)
 : m_last_ID(0)
@@ -48,6 +49,8 @@ void GameObjectFactory::createTemplate(const std::string& name)
             gameObject->addComponent<CameraComponent>(std::make_unique<CameraComponent>(*gameObject, componentJSON));
         if (componentJSON["componentType"].get<std::string>() == "Animation")
             gameObject->addComponent<AnimationComponent>(std::make_unique<AnimationComponent>(*gameObject, componentJSON));
+        if (componentJSON["componentType"].get<std::string>() == "ColliderAABB")
+            gameObject->addComponent<ColliderAABBComponent>(std::make_unique<ColliderAABBComponent>(*gameObject, componentJSON));
     }
 
     templates[name] = std::move(gameObject);
