@@ -20,10 +20,14 @@
             "renderTransform": true
         },
         {
+            "componentType": "RigidBody",
+            "mass": 1,
+            "velocity": [0, 0]
+        },
+        {
             "componentType": "ColliderAABB",
             "neg_offset_position": [16, 16],
-            "dimension": [32, 32],
-            "mass": 1
+            "dimension": [32, 32]
         },
         {
             "componentType": "Camera",

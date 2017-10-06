@@ -13,10 +13,14 @@
             "renderTransform": false
         },
         {
+            "componentType": "RigidBody",
+            "static": true,
+            "velocity": [0, 0]
+        },
+        {
             "componentType": "ColliderAABB",
             "neg_offset_position": [32, 25],
-            "dimension": [64, 60],
-            "static": true
+            "dimension": [64, 60]
         }
     ]
 }
