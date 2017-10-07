@@ -1,3 +1,5 @@
+#pragma once
+
 #include <json.hpp>
 #include "Component.h"
 #include "TransformComponent.h"
