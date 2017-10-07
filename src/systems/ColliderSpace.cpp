@@ -6,6 +6,36 @@
 #include <algorithm>
 #include <cassert>
 
+Raycast::Raycast() : Raycast({0, 0}, {1, 0}) {}
+
+Raycast::Raycast(sf::Vector2f const& start, sf::Vector2f const& direction, float distance) 
+    : start(start), direction(direction), distance(distance) {}
+
+bool Raycast::is_infinite() const {
+    return distance == std::numeric_limits<float>::max();
+}
+
+sf::Vector2f Raycast::at(float d) const {
+    return start + direction * d;
+}
+
+float Raycast::at_x(float d) const {
+    return start.x + direction.x * d;
+}
+
+float Raycast::at_y(float d) const {
+    return start.y + direction.y * d;
+}
+
+RaycastInfo::RaycastInfo() : RaycastInfo(nullptr, 0) {}
+
+RaycastInfo::RaycastInfo(ColliderAABBComponent* collider, float distance) 
+    : collider(collider), distance(distance) {}
+
+RaycastInfo::operator bool() const {
+    return collider != nullptr;
+}
+
 void ColliderSpace::insert(ColliderAABBComponent& collider) {
     m_colliders.push_back(&collider);
 }
@@ -19,6 +49,20 @@ void ColliderSpace::update(sf::Time const& time)
     for (auto it0 = m_colliders.begin(); it0 != m_colliders.end(); ++it0) 
         for (auto it1 = it0 + 1; it1 != m_colliders.end(); ++it1) 
             AABBCollision(**it0, **it1);
+}
+
+RaycastInfo ColliderSpace::raycast(Raycast const& r, std::unordered_set<ColliderAABBComponent*> const& ignored) {
+    RaycastInfo info(nullptr, r.distance);
+    for (auto& c : m_colliders) 
+    {
+        if (ignored.find(c) == ignored.end())
+        {
+            checkRaycastAABB(r, c, info);
+            if (r.distance == 0)
+                return info;
+        }
+    }
+    return info;
 }
 
 void ColliderSpace::AABBCollision(ColliderAABBComponent& c0, ColliderAABBComponent& c1)
@@ -89,4 +133,77 @@ void ColliderSpace::resolveCollision(ColliderAABBComponent& c0, ColliderAABBComp
     }
     // else
     //  onTrigger
+}
+
+void ColliderSpace::checkRaycastAABB(Raycast const& r, ColliderAABBComponent* c, RaycastInfo& info)
+{
+    float bottom = c->bottom();
+    float right = c->right();
+    float top = c->top();
+    float left = c->left();
+    if (r.direction.y != 0) 
+    {
+        {
+            float d = (bottom - r.start.y) / r.direction.y;
+            float x = r.at_x(d);
+            if (d < info.distance && d >= 0 && d < r.distance && x >= left && x <= right)
+            {
+                info.distance = d;
+                info.collider = c;
+            }
+        }
+        {
+            float d = (top - r.start.y) / r.direction.y;
+            float x = r.at_x(d);
+            if (d < info.distance && d >= 0 && d < r.distance && x >= left && x <= right)
+            {
+                info.distance = d;
+                info.collider = c;
+            }
+        }
+        {
+            float d = (left - r.start.x) / r.direction.x;
+            float y = r.at_y(d);
+            if (d < info.distance && d >= 0 && d < r.distance && y >= top && y <= bottom)
+            {
+                info.distance = d;
+                info.collider = c;
+            }
+        }
+        {
+            float d = (right - r.start.x) / r.direction.x;
+            float y = r.at_y(d);
+            if (d < info.distance && d >= 0 && d < r.distance && y >= top && y <= bottom)
+            {
+                info.distance = d;
+                info.collider = c;
+            }
+        }
+    }
+    else
+    {
+        if (r.start.x >= left && r.start.x <= right)
+        {
+            info.distance = 0;
+            info.collider = c;
+        }
+        else if (r.start.x > right && r.direction.x < 0)
+        {
+            float d = r.start.x - left;
+            if (d < info.distance && d >= 0 && d < r.distance)
+            {
+                info.distance = d;
+                info.collider = c;
+            } 
+        }
+        else if (r.start.x < right && r.direction.x > 0)
+        {
+            float d = right - r.start.x;
+            if (d < info.distance && d >= 0 && d < r.distance)
+            {
+                info.distance = d;
+                info.collider = c;
+            } 
+        }
+    }
 }
