@@ -37,9 +37,10 @@ As SFML will be built from sources, you will be required to have the SFML source
 Debian-based(eg. Lubuntu, Xubuntu, Ubuntu, ...): ``sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
 
 Arch Linux-based(eg. Manjaro): ``sudo pacman -S -Y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
+
 The -y parameter works by automatically accepting the requests for approval.
 
-Other distributions will follow. Here you can find all the depenency names
+Other distributions will follow. The dependency names are listed here:
 https://www.sfml-dev.org/tutorials/2.4/compile-with-cmake.php
 
 ## Compiling with Visual Studio
@@ -64,12 +65,12 @@ The IDE reads the CMakeLists.txt and compiles the program.
 ## Compiling without an IDE
 #### Preparation Windows
 Make sure you have MINGW with a c++ compiler, make installed in your path.
-Install CMake from their official website and add it to the PATH.
+Install CMake from the official website and add it to the PATH.
 
 **Note:** For the game to be correctly executed on Windows you will need to install OpenAL, check OpenAL at https://openal.org/downloads/ and download the latest installer.
 
 #### Linux
-Install aC++ compiler, make and CMake using your distribution's package manager.
+Install a C++ compiler, make and CMake using your distribution's package manager.
 
 #### Mac is currently not supported as it is untested
 
@@ -91,7 +92,7 @@ and your files will be compiled.
 
 ## Program crashes when launching?
 
-Most likely it will happen because you wont have the res/ folder where the
+Crashed will most likely occur because you lack the res/ folder where the
 executable files lie. Just copy the folder to your build/ folder and this will
 most likely get you up and running again.
 
