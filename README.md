@@ -92,8 +92,8 @@ and your files will be compiled.
 
 ## Program crashes when launching?
 
-Crashed will most likely occur because you lack the res/ folder where the
-executable files lie. Just copy the folder to your build/ folder and this will
+In most cases, crashes will be caused by the lack of the "res/" folder where the
+executable files lie. Just copy the folder to your "build/" folder and this will
 most likely get you up and running again.
 
 If you're unable to resolve your errors, feel free to contact us on Discord!
