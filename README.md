@@ -4,9 +4,9 @@ This round, we're replicating a Zombie game that we found online.
 
 # How to join us
 
-Just join our public discord, where all of the development happens.
+Just join our public discord, where all of the development happens. For project related talk just look under the "Community Project" category.
 
-`https://discord.gg/JKVBze6`
+`https://discord.gg/feKbBwS`
 
 # Building and Contributing
 
