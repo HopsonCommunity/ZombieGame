@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "../util/NonCopyable.h"
 #include "../systems/ColliderSpace.h"
+#include "../util/DebugRenderer.h"
 
 class Game;
 
@@ -26,9 +27,11 @@ class GameState : public NonCopyable
 
         Game* getGamePointer() { return m_pGame;}
         ColliderSpace* getColliderSpace() { return &m_ColliderSpace; }
-
+        DebugRenderer* getDebugRenderer() { return &m_debugRenderer; }
+        
     protected:
         Game* m_pGame;
         ColliderSpace m_ColliderSpace;
+        DebugRenderer m_debugRenderer;
 };
 

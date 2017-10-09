@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 class GameObject;
+class DebugRenderer;
 
 class Component
 {
