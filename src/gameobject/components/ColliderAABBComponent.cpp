@@ -2,7 +2,7 @@
 
 #include "../GameObject.h"
 #include "../../state/GameState.h"
-#include "RigidBodyComponent.h"
+#include "../../systems/Collider/AABBCollider.h"
 
 unsigned int ColliderAABBComponent::ID = 7;
 
@@ -11,24 +11,23 @@ ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, nlohmann::json j
 {
     dimension = sf::Vector2f(json["dimension"][0], json["dimension"][1]);
     offset_position = -sf::Vector2f(json["neg_offset_position"][0], json["neg_offset_position"][1]);
+    collider = AABBCollider(offset_position, dimension);
 }
 
 ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension)
-    : Component(owner), offset_position(offset_position), dimension(dimension)
+    : Component(owner), offset_position(offset_position), dimension(dimension), collider(AABBCollider(offset_position, dimension))
 {
 
 }
 
 ColliderAABBComponent::~ColliderAABBComponent()
 {
-    m_owner.getOwningState().getColliderSpace()->remove(*this);
+    m_owner.getOwningState().getColliderSpace()->remove(&m_owner);
 }
 
 void ColliderAABBComponent::setup()
 {
-    transform = m_owner.getComponent<TransformComponent>();
-    rigidbody = m_owner.getComponent<RigidBodyComponent>();
-    m_owner.getOwningState().getColliderSpace()->insert(*this);
+    m_owner.getOwningState().getColliderSpace()->insert({ &m_owner, &collider });
 }
 
 void ColliderAABBComponent::update(sf::Time const& time)

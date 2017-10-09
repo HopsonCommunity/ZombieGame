@@ -2,6 +2,7 @@
 
 #include "../gameobject/components/ColliderAABBComponent.h"
 #include "../gameobject/components/RigidBodyComponent.h"
+#include "../gameobject/components/TransformComponent.h"
 
 #include <algorithm>
 #include <cassert>
@@ -12,7 +13,7 @@ Raycast::Raycast(sf::Vector2f const& start, sf::Vector2f const& direction, float
     : start(start), direction(direction), distance(distance) {}
 
 bool Raycast::is_infinite() const {
-    return distance == std::numeric_limits<float>::max();
+    return distance >= Raycast::max_distance;
 }
 
 sf::Vector2f Raycast::at(float d) const {
@@ -36,28 +37,40 @@ RaycastInfo::operator bool() const {
     return collider != nullptr;
 }
 
-void ColliderSpace::insert(ColliderAABBComponent& collider) {
-    m_colliders.push_back(&collider);
+bool ColliderOwner::operator != (ColliderOwner const& o) const {
+    return !(*this == o);
 }
 
-void ColliderSpace::remove(ColliderAABBComponent& collider) {
-    m_colliders.erase(std::remove(m_colliders.begin(), m_colliders.end(), &collider), m_colliders.end());
+bool ColliderOwner::operator == (ColliderOwner const& o) const {
+    return tf == o.tf || rb == o.rb;
+}
+
+void ColliderSpace::insert(ColliderOwner const& collider) {
+    m_colliders.push_back(collider);
+}
+
+void ColliderSpace::remove(ColliderOwner const& collider) {
+    m_colliders.erase(std::remove(m_colliders.begin(), m_colliders.end(), collider), m_colliders.end());
+}
+
+void ColliderSpace::remove(TransformComponent* const& tf, RigidBodyComponent* const rb) {
+    remove({tf, rb, nullptr});
 }
 
 void ColliderSpace::update(sf::Time const& time)
 {
     for (auto it0 = m_colliders.begin(); it0 != m_colliders.end(); ++it0) 
         for (auto it1 = it0 + 1; it1 != m_colliders.end(); ++it1) 
-            AABBCollision(**it0, **it1);
+            checkCollision(*it0, *it1);
 }
 
-RaycastInfo ColliderSpace::raycast(Raycast const& r, std::unordered_set<ColliderAABBComponent*> const& ignored) {
+RaycastInfo ColliderSpace::raycast(Raycast const& r, std::unordered_set<TransformComponent*> const& ignored) {
     RaycastInfo info(nullptr, r.distance);
     for (auto& c : m_colliders) 
     {
-        if (ignored.find(c) == ignored.end())
+        if (ignored.find(c.tf) == ignored.end())
         {
-            checkRaycastAABB(r, c, info);
+            checkRaycastCollision(r, c, info);
             if (r.distance == 0)
                 return info;
         }
@@ -65,57 +78,10 @@ RaycastInfo ColliderSpace::raycast(Raycast const& r, std::unordered_set<Collider
     return info;
 }
 
-void ColliderSpace::AABBCollision(ColliderAABBComponent& c0, ColliderAABBComponent& c1)
+void ColliderSpace::resolveCollision(ColliderOwner& c0, ColliderOwner& c1, sf::Vector2f const& direction)
 {
-    float dl = c1.right() - c0.left();
-    float dr = c0.right() - c1.left();
-    float dt = c1.bottom() - c0.top();
-    float db = c0.bottom() - c1.top();
-
-    if (dl > 0 && dr > 0 && db > 0 && dt > 0) // Collision
-    {
-        bool dx_neg = false;
-        bool dy_neg = false;
-        float dx_abs = 0;
-        float dy_abs = 0;
-        if (dl < c1.width() - c0.width())
-        {
-            dx_abs = dl;
-        }
-        else if (dr < c0.width())
-        {
-            dx_abs = dr;
-            dx_neg = true;
-        }
-
-        if (dt < c1.height() - c0.height())
-        {
-            dy_abs = dt;
-        }
-        else if (db < c0.height())
-        {
-            dy_abs = db;
-            dy_neg = true;
-        }
-
-        if (dx_abs != 0)
-        {
-            if (dy_abs == 0 || dx_abs < dy_abs)
-                resolveCollision(c0, c1, {dx_neg ? -dx_abs : dx_abs, 0});
-            else
-                resolveCollision(c0, c1, {0, dy_neg ? -dy_abs : dy_abs});
-        }
-        else
-        {
-            resolveCollision(c0, c1, {0, dy_neg ? -dy_abs : dy_abs});
-        }
-    }
-}
-
-void ColliderSpace::resolveCollision(ColliderAABBComponent& c0, ColliderAABBComponent& c1, sf::Vector2f const& movement)
-{
-    auto rb0 = c0.rigidbody;
-    auto rb1 = c1.rigidbody;
+    auto rb0 = c0.rb;
+    auto rb1 = c1.rb;
     if (rb0 && rb1) 
     {
         bool c0_static = rb0->is_static;
@@ -127,83 +93,37 @@ void ColliderSpace::resolveCollision(ColliderAABBComponent& c0, ColliderAABBComp
         constexpr float epsilon = 0.01; 
         assert(factor0 + factor1 > 1 - epsilon || factor0 + factor1 < 1 + epsilon);
 
-        c0.transform->position += movement * factor0;
-        c1.transform->position -= movement * factor1;
+        c0.tf->position += direction * factor0;
+        c1.tf->position -= direction * factor1;
         // onCollision
     }
     // else
     //  onTrigger
 }
 
-void ColliderSpace::checkRaycastAABB(Raycast const& r, ColliderAABBComponent* c, RaycastInfo& info)
-{
-    float bottom = c->bottom();
-    float right = c->right();
-    float top = c->top();
-    float left = c->left();
-    if (r.direction.y != 0) 
-    {
-        {
-            float d = (bottom - r.start.y) / r.direction.y;
-            float x = r.at_x(d);
-            if (d < info.distance && d >= 0 && d < r.distance && x >= left && x <= right)
-            {
-                info.distance = d;
-                info.collider = c;
-            }
-        }
-        {
-            float d = (top - r.start.y) / r.direction.y;
-            float x = r.at_x(d);
-            if (d < info.distance && d >= 0 && d < r.distance && x >= left && x <= right)
-            {
-                info.distance = d;
-                info.collider = c;
-            }
-        }
-        {
-            float d = (left - r.start.x) / r.direction.x;
-            float y = r.at_y(d);
-            if (d < info.distance && d >= 0 && d < r.distance && y >= top && y <= bottom)
-            {
-                info.distance = d;
-                info.collider = c;
-            }
-        }
-        {
-            float d = (right - r.start.x) / r.direction.x;
-            float y = r.at_y(d);
-            if (d < info.distance && d >= 0 && d < r.distance && y >= top && y <= bottom)
-            {
-                info.distance = d;
-                info.collider = c;
-            }
-        }
+void ColliderSpace::checkRaycastCollision(Raycast const& r, ColliderOwner& c, RaycastInfo& info) {
+
+}
+
+void ColliderSpace::checkCollision(ColliderOwner& c0, ColliderOwner& c1) {
+    std::vector<sf::Vector2f> normals;
+    auto n0 = c0.collider->getNormals();
+    auto n1 = c1.collider->getNormals();
+    normals.reserve(n0.size() + n1.size());
+    for (auto& n : n0) normals.push_back(n);
+    for (auto& n : n1) normals.push_back(n);
+
+    float min_dist = std::numeric_limits<float>::max();
+    sf::Vector2f min_axis;
+
+    for (auto const& n : normals) {
+        Projection p0 = c0.collider->project(n);
+        Projection p1 = c1.collider->project(n);
+
+        if (!Projection::overlap(p0, p1))
+            return;
+        if (static_cast<float>(Projection::overlap_area(p0, p1)) < min_dist) min_axis = n; 
     }
-    else
-    {
-        if (r.start.x >= left && r.start.x <= right)
-        {
-            info.distance = 0;
-            info.collider = c;
-        }
-        else if (r.start.x > right && r.direction.x < 0)
-        {
-            float d = r.start.x - left;
-            if (d < info.distance && d >= 0 && d < r.distance)
-            {
-                info.distance = d;
-                info.collider = c;
-            } 
-        }
-        else if (r.start.x < right && r.direction.x > 0)
-        {
-            float d = right - r.start.x;
-            if (d < info.distance && d >= 0 && d < r.distance)
-            {
-                info.distance = d;
-                info.collider = c;
-            } 
-        }
-    }
+
+    resolveCollision(c0, c1, min_axis);
 }

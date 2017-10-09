@@ -2,9 +2,8 @@
 
 #include <json.hpp>
 #include "Component.h"
-#include "TransformComponent.h"
 
-class RigidBodyComponent;
+class AABBCollider;
 
 class ColliderAABBComponent : public Component
 {
@@ -31,11 +30,10 @@ public:
     float width() const;
     float height() const;
 
-    TransformComponent* transform;
-    RigidBodyComponent* rigidbody;
-        
 private:
 
     sf::Vector2f offset_position;
     sf::Vector2f dimension;
+
+    AABBCollider collider;
 };
