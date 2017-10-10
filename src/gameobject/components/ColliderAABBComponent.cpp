@@ -4,6 +4,9 @@
 #include "../../state/GameState.h"
 #include "RigidBodyComponent.h"
 #include "TransformComponent.h"
+#include "../../systems/ColliderSpace.h"
+
+#include <functional>
 
 unsigned int ColliderAABBComponent::ID = 7;
 
@@ -29,7 +32,12 @@ ColliderAABBComponent::~ColliderAABBComponent()
 void ColliderAABBComponent::setup()
 {
     transform = m_owner.getComponent<TransformComponent>();
-    m_owner.getOwningState().getColliderSpace()->insert({ transform, m_owner.getComponent<RigidBodyComponent>(), &collider });
+    m_owner.getOwningState().getColliderSpace()->insert({ 
+        transform, 
+        m_owner.getComponent<RigidBodyComponent>(), 
+        &collider, 
+        std::function<void(CollisionInfo&)>([&] (CollisionInfo& c) { m_owner.onCollision(c); }),
+        std::function<void(TriggerInfo&)>([&] (TriggerInfo& t) { m_owner.onTrigger(t); }) });
 }
 
 void ColliderAABBComponent::update(sf::Time const& time)

@@ -9,7 +9,7 @@ class TransformComponent;
 
 class ColliderAABBComponent : public Component
 {
-    static constexpr bool collider_wire_frame = true; // debug
+    static constexpr bool collider_wire_frame = false; // debug
 public:
 
     ColliderAABBComponent(GameObject& owner, nlohmann::json json);

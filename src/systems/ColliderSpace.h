@@ -7,10 +7,23 @@
 #include <vector>
 #include <limits>
 #include <unordered_set>
+#include <functional>
 
 class ColliderAABBComponent;
 class TransformComponent;
 class RigidBodyComponent;
+
+struct CollisionInfo {
+    TransformComponent* other;
+    SAT_Collider* other_collider;
+
+    sf::Vector2f resolveMovement;
+};
+
+struct TriggerInfo {
+    TransformComponent* other;
+    SAT_Collider* other_collider;
+};
 
 struct Raycast {
     static constexpr float max_distance = 10000; // std::numeric_limits<float>::max() 
@@ -41,6 +54,9 @@ struct ColliderOwner {
     RigidBodyComponent* rb;
     SAT_Collider* collider;
 
+    std::function<void(CollisionInfo&)> onCollision;
+    std::function<void(TriggerInfo&)> onTrigger;
+    
     bool operator == (ColliderOwner const& o) const;
     bool operator != (ColliderOwner const& o) const;
 };

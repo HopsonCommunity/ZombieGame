@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 class GameObject;
+class CollisionInfo;
+class TriggerInfo;
 
 class Component
 {
@@ -19,6 +21,9 @@ class Component
 
         virtual std::unique_ptr<Component> clone(GameObject& newGameObject) = 0;
 
+        virtual void onCollision(CollisionInfo& info) {}
+        virtual void onTrigger(TriggerInfo& info) {}
+        
     protected:
         GameObject& m_owner;
 };

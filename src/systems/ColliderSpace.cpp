@@ -103,10 +103,16 @@ void ColliderSpace::resolveCollision(ColliderOwner& c0, ColliderOwner& c1, sf::V
 
         c0.tf->position += direction * f0;
         c1.tf->position -= direction * f1;
-        // onCollision
+        // event
+        CollisionInfo ci0 {c1.tf, c1.collider, direction * f0};
+        CollisionInfo ci1 {c0.tf, c0.collider, direction * f1};
+        c0.onCollision(ci0);
+        c1.onCollision(ci1);
     }
-    // else
-    //  onTrigger
+    TriggerInfo t0 {c1.tf, c1.collider};
+    TriggerInfo t1 {c0.tf, c0.collider};
+    c0.onTrigger(t0);
+    c1.onTrigger(t1);
 }
 
 void ColliderSpace::checkRaycastCollision(Raycast const& r, ColliderOwner& c, RaycastInfo& info) {

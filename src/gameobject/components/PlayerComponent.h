@@ -4,6 +4,9 @@
 #include "Component.h"
 #include "TransformComponent.h"
 
+#include "../../systems/ColliderSpace.h"
+#include <iostream>
+
 class PlayerComponent : public Component
 {
 public:
@@ -15,7 +18,7 @@ public:
     void fixed_update(const sf::Time &deltaTime) override;
     void render(sf::RenderTarget& renderTarget) override;
     std::unique_ptr<Component> clone(GameObject& newGameObject) override;
-
+    
     static unsigned ID;
 
     float speed;
