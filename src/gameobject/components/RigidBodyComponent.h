@@ -11,7 +11,7 @@ class RigidBodyComponent : public Component {
 public:
 
     RigidBodyComponent(GameObject& owner, nlohmann::json json);
-    RigidBodyComponent(GameObject& owner, sf::Vector2f const& velocity, float mass, bool is_static);
+    RigidBodyComponent(GameObject& owner, sf::Vector2f const& velocity, float inv_mass);
 
     virtual void setup();
     virtual void update(const sf::Time& deltaTime);
@@ -25,8 +25,7 @@ public:
     TransformComponent* transform;
 
     sf::Vector2f velocity;
-    float mass;
-    bool is_static;
+    float inv_mass;
 
     static unsigned int ID; 
 

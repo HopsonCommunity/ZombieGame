@@ -94,17 +94,15 @@ void ColliderSpace::resolveCollision(ColliderOwner& c0, ColliderOwner& c1, sf::V
     auto rb1 = c1.rb;
     if (rb0 && rb1) 
     {
-        bool c0_static = rb0->is_static;
-        bool c1_static = rb1->is_static;
-
-        float factor0 = (c0_static ? 0 : (c1_static ? 1 : (1 - rb0->mass / (rb0->mass + rb1->mass))));
-        float factor1 = (c1_static ? 0 : (c0_static ? 1 : (1 - rb1->mass / (rb0->mass + rb1->mass))));
+        float tot = rb0->inv_mass + rb1->inv_mass;
+        float f0 = rb0->inv_mass / tot;
+        float f1 = rb1->inv_mass / tot;
         
         constexpr float epsilon = 0.01; 
-        assert(factor0 + factor1 > 1 - epsilon || factor0 + factor1 < 1 + epsilon);
+        assert(f0 + f1 > 1 - epsilon || f0 + f1 < 1 + epsilon);
 
-        c0.tf->position += direction * factor0;
-        c1.tf->position -= direction * factor1;
+        c0.tf->position += direction * f0;
+        c1.tf->position -= direction * f1;
         // onCollision
     }
     // else
