@@ -3,6 +3,7 @@
 #include "../gameobject/components/ColliderAABBComponent.h"
 #include "../gameobject/components/RigidBodyComponent.h"
 #include "../gameobject/components/TransformComponent.h"
+#include "../gameobject/GameObject.h"
 
 #include <algorithm>
 #include <cassert>
@@ -53,8 +54,17 @@ void ColliderSpace::remove(ColliderOwner const& collider) {
     m_colliders.erase(std::remove(m_colliders.begin(), m_colliders.end(), collider), m_colliders.end());
 }
 
-void ColliderSpace::remove(TransformComponent* const& tf, RigidBodyComponent* const rb) {
-    remove({tf, rb, nullptr});
+void ColliderSpace::remove(TransformComponent* tf) {
+    remove({tf, nullptr, nullptr});
+}
+
+void ColliderSpace::updateRigidBody(TransformComponent* tf, RigidBodyComponent* rb) {
+    for(auto& c : m_colliders) {
+        if (c.tf == tf) {
+            c.rb = rb;
+            break;
+        }
+    }
 }
 
 void ColliderSpace::update(sf::Time const& time)
@@ -106,7 +116,7 @@ void ColliderSpace::checkRaycastCollision(Raycast const& r, ColliderOwner& c, Ra
 }
 
 void ColliderSpace::checkCollision(ColliderOwner& c0, ColliderOwner& c1) {
-    std::vector<sf::Vector2f> normals;
+    std::vector<sf::Vector2f> normals; // remove parallele normal ? with an unordered set ? (but sf::Vectorf doesn't implement a hash's function if i'm right)
     auto n0 = c0.collider->getNormals();
     auto n1 = c1.collider->getNormals();
     normals.reserve(n0.size() + n1.size());
@@ -117,13 +127,25 @@ void ColliderSpace::checkCollision(ColliderOwner& c0, ColliderOwner& c1) {
     sf::Vector2f min_axis;
 
     for (auto const& n : normals) {
-        Projection p0 = c0.collider->project(n);
-        Projection p1 = c1.collider->project(n);
+        Projection p0 = c0.collider->project(n, c0.tf->position);
+        Projection p1 = c1.collider->project(n, c1.tf->position);
 
         if (!Projection::overlap(p0, p1))
             return;
-        if (static_cast<float>(Projection::overlap_area(p0, p1)) < min_dist) min_axis = n; 
+        float mtv = getMTV(p0, p1);
+        if (std::abs(mtv) < min_dist) min_axis = mtv < 0 ? -n : n, min_dist = std::abs(mtv);
     }
-
     resolveCollision(c0, c1, min_axis);
+}
+
+float ColliderSpace::getMTV(Projection const& p0, Projection const& p1) const {
+    // containment
+    if (p0.first < p1.first && p0.second > p1.second)
+        return std::min(p1.second - p0.first, p0.second - p1.first);
+    if (p0.first > p1.first && p0.second > p1.second)
+        return std::min(p0.second - p1.first, p1.second - p0.first);
+
+    if (p0.first > p1.first)
+        return p0.second - p1.first;
+    return p1.first - p0.second;
 }

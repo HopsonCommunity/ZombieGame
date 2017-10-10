@@ -1,13 +1,15 @@
 #pragma once
 
 #include <json.hpp>
-#include "Component.h"
 
-class AABBCollider;
+#include "Component.h"
+#include "../../systems/Collider/AABBCollider.h"
+
+class TransformComponent;
 
 class ColliderAABBComponent : public Component
 {
-    static constexpr bool collider_wire_frame = false; // debug
+    static constexpr bool collider_wire_frame = true; // debug
 public:
 
     ColliderAABBComponent(GameObject& owner, nlohmann::json json);
@@ -32,8 +34,6 @@ public:
 
 private:
 
-    sf::Vector2f offset_position;
-    sf::Vector2f dimension;
-
+    TransformComponent* transform;
     AABBCollider collider;
 };

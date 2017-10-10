@@ -11,8 +11,11 @@ public:
 
     std::vector<sf::Vector2f> getPoints() const override;
     std::vector<sf::Vector2f> getNormals() const override;
-    Projection project(sf::Vector2f const& normal) const override;
+    Projection project(sf::Vector2f const& normal, sf::Vector2f const& offset) const override;
 
+    sf::Vector2f getOrigin() const;
+    sf::Vector2f getDimension() const;
+    
 private:
 
     std::vector<sf::Vector2f> points;

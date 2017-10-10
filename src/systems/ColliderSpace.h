@@ -41,7 +41,6 @@ struct ColliderOwner {
     RigidBodyComponent* rb;
     SAT_Collider* collider;
 
-    bool operator < (ColliderOwner const& o) const;
     bool operator == (ColliderOwner const& o) const;
     bool operator != (ColliderOwner const& o) const;
 };
@@ -51,7 +50,8 @@ public:
 
     void insert(ColliderOwner const& colider);
     void remove(ColliderOwner const& collider);
-    void remove(TransformComponent* const& tf, RigidBodyComponent* const& rb = nullptr);
+    void remove(TransformComponent* tf);
+    void updateRigidBody(TransformComponent* tf, RigidBodyComponent* rb);
 
     void update(sf::Time const& time);
 
@@ -62,6 +62,7 @@ private:
     void checkCollision(ColliderOwner& c0, ColliderOwner& c1);
     void checkRaycastCollision(Raycast const& r, ColliderOwner& c, RaycastInfo& info);
     void resolveCollision(ColliderOwner& c0, ColliderOwner& c1, sf::Vector2f const& direction);
-    
+    float getMTV(Projection const& p0, Projection const& p1) const;
+        
     std::vector<ColliderOwner> m_colliders;
 };

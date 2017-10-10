@@ -17,21 +17,29 @@ std::vector<sf::Vector2f> AABBCollider::getPoints() const {
 
 std::vector<sf::Vector2f> AABBCollider::getNormals() const {
     return {
-        { 1, 0 },
         { 0, 1 },
-        { -1, 0 },
-        { 0, -1 }
+        { 1, 0 }
     };
 }
 
-Projection AABBCollider::project(sf::Vector2f const& normal) const {
-    float min = points[0].x * normal.x + points[0].y * normal.y;
-    float max = points[0].x * normal.x + points[0].y * normal.y;
+Projection AABBCollider::project(sf::Vector2f const& normal, sf::Vector2f const& offset) const {
+    auto p = points[0] + offset;
+    float min = p.x * normal.x + p.y * normal.y;
+    float max = p.x * normal.x + p.y * normal.y;
 
     for(int i = 1; i < 4; ++i) {
-        float dot = points[i].x * normal.x + points[i].y * normal.y;
+        p = points[i] + offset;
+        float dot = p.x * normal.x + p.y * normal.y;
         if (dot < min) min = dot;
         if (dot > max) max = dot;
     }
     return { min, max };
 };
+
+sf::Vector2f AABBCollider::getOrigin() const {
+    return points[0];
+}
+
+sf::Vector2f AABBCollider::getDimension() const {
+    return points[2] - points[0];
+}
