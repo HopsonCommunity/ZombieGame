@@ -31,11 +31,11 @@ float Raycast::at_y(float d) const {
 
 RaycastInfo::RaycastInfo() : RaycastInfo(nullptr, 0) {}
 
-RaycastInfo::RaycastInfo(ColliderAABBComponent* collider, float distance) 
-    : collider(collider), distance(distance) {}
+RaycastInfo::RaycastInfo(TransformComponent* other, float distance) 
+    : other(other), distance(distance) {}
 
 RaycastInfo::operator bool() const {
-    return collider != nullptr;
+    return other != nullptr;
 }
 
 bool ColliderOwner::operator != (ColliderOwner const& o) const {
@@ -115,8 +115,36 @@ void ColliderSpace::resolveCollision(ColliderOwner& c0, ColliderOwner& c1, sf::V
     c1.onTrigger(t1);
 }
 
-void ColliderSpace::checkRaycastCollision(Raycast const& r, ColliderOwner& c, RaycastInfo& info) {
-
+void ColliderSpace::checkRaycastCollision(Raycast const& r, ColliderOwner& co, RaycastInfo& info) {
+    sf::Vector2f normal(r.direction.y, -r.direction.x);
+    Projection proj = co.collider->project(normal, co.tf->position);
+    float rayproj = r.start.x * normal.x + r.start.y * normal.y;
+    if (proj.first <= rayproj && rayproj <= proj.second) {
+ 
+        auto pts = co.collider->getPoints(co.tf->position);
+        for (int i = 0; i < pts.size(); i++) {
+            sf::Vector2f c = pts[i];
+            sf::Vector2f m = pts[(i+1)%pts.size()] - c;
+            float d = r.direction.y * m.x - r.direction.x * m.y;
+            if (d != 0) {
+                float n = ((r.start.x - c.x) * r.direction.y - (r.start.y - c.y) * r.direction.x) / d;
+                if (n >= 0 && n <= 1) {
+                    sf::Vector2f intersection = c + m * n;
+                    float ts;
+                    if (r.direction.y == 0)
+                        ts = (intersection.x - r.start.x) / r.direction.x;
+                    else
+                        ts = (intersection.y - r.start.y) / r.direction.y;
+                    if (ts >= 0 && ts <= r.distance) {
+                        info.other = co.tf;
+                        info.distance = ts;
+                        return;
+                    }
+                }
+            }
+        }
+ 
+    }
 }
 
 void ColliderSpace::checkCollision(ColliderOwner& c0, ColliderOwner& c1) {

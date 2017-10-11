@@ -26,7 +26,7 @@ struct TriggerInfo {
 };
 
 struct Raycast {
-    static constexpr float max_distance = 10000; // std::numeric_limits<float>::max() 
+    static constexpr float max_distance = 100000; // to avoid overflow... // std::numeric_limits<float>::max() 
     Raycast();
     Raycast(sf::Vector2f const& start, sf::Vector2f const& direction, float distance = max_distance);
 
@@ -36,16 +36,6 @@ struct Raycast {
     float at_y(float d) const;
     
     sf::Vector2f start, direction;
-    float distance;
-};
-
-struct RaycastInfo {
-    RaycastInfo();
-    RaycastInfo(ColliderAABBComponent* collider, float distance);
-
-    operator bool() const;
-
-    ColliderAABBComponent* collider;
     float distance;
 };
 
@@ -59,6 +49,16 @@ struct ColliderOwner {
     
     bool operator == (ColliderOwner const& o) const;
     bool operator != (ColliderOwner const& o) const;
+};
+
+struct RaycastInfo {
+    RaycastInfo();
+    RaycastInfo(TransformComponent* other, float distance);
+
+    operator bool() const;
+
+    TransformComponent* other;
+    float distance;
 };
 
 class ColliderSpace {

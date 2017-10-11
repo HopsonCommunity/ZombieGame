@@ -11,8 +11,10 @@ AABBCollider::AABBCollider(sf::Vector2f const& origin, sf::Vector2f const& dimen
 
 AABBCollider::~AABBCollider() {}
 
-std::vector<sf::Vector2f> AABBCollider::getPoints() const {
-    return points;
+std::vector<sf::Vector2f> AABBCollider::getPoints(sf::Vector2f const& offset) const {
+    auto pts = points;
+    for(auto& v : pts) v += offset;
+    return pts;
 }
 
 std::vector<sf::Vector2f> AABBCollider::getNormals() const {

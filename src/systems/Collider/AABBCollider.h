@@ -9,7 +9,7 @@ public:
     AABBCollider(sf::Vector2f const& origin, sf::Vector2f const& dimension);
     virtual ~AABBCollider();
 
-    std::vector<sf::Vector2f> getPoints() const override;
+    std::vector<sf::Vector2f> getPoints(sf::Vector2f const& offset = sf::Vector2f(0, 0)) const override;
     std::vector<sf::Vector2f> getNormals() const override;
     Projection project(sf::Vector2f const& normal, sf::Vector2f const& offset) const override;
 
