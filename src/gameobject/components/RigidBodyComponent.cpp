@@ -7,12 +7,11 @@ unsigned int RigidBodyComponent::ID = 8;
 
 RigidBodyComponent::RigidBodyComponent(GameObject& owner, nlohmann::json json) : Component(owner) {
     velocity = sf::Vector2f{ json["velocity"][0], json["velocity"][1] };
-    is_static = json.count("static") > 0 && static_cast<bool>(json["static"]);
-    mass = json.count("mass") ? static_cast<float>(json["mass"]) : 1;    
+    inv_mass = json.count("inv_mass") ? static_cast<float>(json["inv_mass"]) : 1;    
 }
 
-RigidBodyComponent::RigidBodyComponent(GameObject& owner, sf::Vector2f const& velocity, float mass, bool is_static)
-    : Component(owner), velocity(velocity), mass(mass), is_static(is_static) {}
+RigidBodyComponent::RigidBodyComponent(GameObject& owner, sf::Vector2f const& velocity, float inv_mass)
+    : Component(owner), velocity(velocity), inv_mass(inv_mass) {}
 
 void RigidBodyComponent::setup() {
     transform = m_owner.getComponent<TransformComponent>();
@@ -31,10 +30,9 @@ void RigidBodyComponent::render(sf::RenderTarget& renderTarget) {
 }
 
 std::unique_ptr<Component> RigidBodyComponent::clone(GameObject& newGameObject) {
-    return std::make_unique<RigidBodyComponent>(newGameObject, velocity, mass, is_static);
+    return std::make_unique<RigidBodyComponent>(newGameObject, velocity, inv_mass);
 }
 
 void RigidBodyComponent::addForce(sf::Vector2f const& force) {
-    if (!is_static)
-        velocity += force / mass;
+    velocity += force * inv_mass;
 }

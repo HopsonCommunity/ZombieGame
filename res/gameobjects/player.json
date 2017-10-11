@@ -21,7 +21,7 @@
         },
         {
             "componentType": "RigidBody",
-            "mass": 1,
+            "inv_mass": 1,
             "velocity": [0, 0]
         },
         {

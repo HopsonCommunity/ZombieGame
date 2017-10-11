@@ -8,6 +8,8 @@
 #include "components/Component.h"
 
 class GameState;
+class CollisionInfo;
+class TriggerInfo;
 
 class GameObject
 {
@@ -44,6 +46,9 @@ class GameObject
 
         std::unique_ptr<GameObject> clone(GameState& owningState, unsigned int id);
 
+        void onCollision(CollisionInfo& info);
+        void onTrigger(TriggerInfo& info);
+        
         GameState& getOwningState() { return m_owningState;}
 
     private:

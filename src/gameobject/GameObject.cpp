@@ -3,6 +3,7 @@
 #include "components/Component.h"
 
 #include "../state/GameState.h"
+#include "../systems/ColliderSpace.h"
 
 GameObject::GameObject(GameState& gamestate, unsigned id)
 : m_id(id)
@@ -43,4 +44,14 @@ std::unique_ptr<GameObject> GameObject::clone(GameState& owningState, unsigned i
 	clone->setup();
 
 	return clone;
+}
+
+void GameObject::onCollision(CollisionInfo& info) {
+	for(auto& it : m_components)
+		it.second->onCollision(info);
+}
+
+void GameObject::onTrigger(TriggerInfo& info) {
+	for(auto& it : m_components)
+		it.second->onTrigger(info);
 }

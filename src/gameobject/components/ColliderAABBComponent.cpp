@@ -3,32 +3,41 @@
 #include "../GameObject.h"
 #include "../../state/GameState.h"
 #include "RigidBodyComponent.h"
+#include "TransformComponent.h"
+#include "../../systems/ColliderSpace.h"
+
+#include <functional>
 
 unsigned int ColliderAABBComponent::ID = 7;
 
 ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, nlohmann::json json) 
     : Component(owner) 
 {
-    dimension = sf::Vector2f(json["dimension"][0], json["dimension"][1]);
-    offset_position = -sf::Vector2f(json["neg_offset_position"][0], json["neg_offset_position"][1]);
+    collider = AABBCollider(
+        -sf::Vector2f(json["neg_offset_position"][0], json["neg_offset_position"][1]), 
+        sf::Vector2f(json["dimension"][0], json["dimension"][1]));
 }
 
 ColliderAABBComponent::ColliderAABBComponent(GameObject& owner, sf::Vector2f offset_position, sf::Vector2f dimension)
-    : Component(owner), offset_position(offset_position), dimension(dimension)
+    : Component(owner), collider(AABBCollider(offset_position, dimension))
 {
 
 }
 
 ColliderAABBComponent::~ColliderAABBComponent()
 {
-    m_owner.getOwningState().getColliderSpace()->remove(*this);
+    m_owner.getOwningState().getColliderSpace()->remove(transform);
 }
 
 void ColliderAABBComponent::setup()
 {
     transform = m_owner.getComponent<TransformComponent>();
-    rigidbody = m_owner.getComponent<RigidBodyComponent>();
-    m_owner.getOwningState().getColliderSpace()->insert(*this);
+    m_owner.getOwningState().getColliderSpace()->insert({ 
+        transform, 
+        m_owner.getComponent<RigidBodyComponent>(), 
+        &collider, 
+        std::function<void(CollisionInfo&)>([&] (CollisionInfo& c) { m_owner.onCollision(c); }),
+        std::function<void(TriggerInfo&)>([&] (TriggerInfo& t) { m_owner.onTrigger(t); }) });
 }
 
 void ColliderAABBComponent::update(sf::Time const& time)
@@ -44,47 +53,66 @@ void ColliderAABBComponent::fixed_update(sf::Time const& time)
 void ColliderAABBComponent::render(sf::RenderTarget& renderTarget) 
 {
     if (ColliderAABBComponent::collider_wire_frame) {
-        sf::RectangleShape box(dimension);
-        box.setPosition(transform->position + offset_position);
-        box.setOutlineColor(sf::Color::Green);
-        box.setOutlineThickness(1);
-        box.setFillColor(sf::Color(0, 0, 0, 0));
-        renderTarget.draw(box);
+        auto ns = collider.getNormals();
+        auto ps = collider.getPoints();
+
+        sf::Vertex vs[5];
+        int i = 0;
+        for (auto const& p : ps) {
+            vs[i].position = p + transform->position;
+            vs[i].color = sf::Color::Green;
+            i++;
+        }
+        vs[4].position = collider.getPoints()[0] + transform->position;
+        vs[4].color = sf::Color::Green;
+        renderTarget.draw(vs, 5, sf::PrimitiveType::LinesStrip);
+
+        sf::Vertex vns[4];
+        i = 0;
+        for (auto const& n : ns) {
+            sf::Vector2f start = transform->position;
+            vns[i].position = start;
+            vns[i+1].position = start + n*10.f;
+            vns[i].color = sf::Color::Magenta;
+            vns[i+1].color = sf::Color::Magenta;
+            i += 2;
+        }
+        renderTarget.draw(vns, 8, sf::PrimitiveType::Lines);
     }
 }
 
 std::unique_ptr<Component> ColliderAABBComponent::clone(GameObject& newGameObject)
 {
-    return std::make_unique<ColliderAABBComponent>(newGameObject, offset_position, dimension);
+    return std::make_unique<ColliderAABBComponent>(newGameObject, collider.getOrigin(), collider.getDimension());
 }
 
 float ColliderAABBComponent::left() const 
 {
-    return transform->position.x + offset_position.x;    
+    return transform->position.x + collider.getOrigin().x;    
 }
 
 float ColliderAABBComponent::right() const
 {
-    return transform->position.x + offset_position.x + dimension.x;    
+    return transform->position.x + collider.getOrigin().x + collider.getDimension().x;    
 }
 
 float ColliderAABBComponent::top() const
 {
-    return transform->position.y + offset_position.y;    
+    return transform->position.y + collider.getOrigin().y;    
 }
 
 float ColliderAABBComponent::bottom() const
 {
-    return transform->position.y + offset_position.y + dimension.y;    
+    return transform->position.y + collider.getOrigin().y + collider.getDimension().y;    
 }
 
 float ColliderAABBComponent::width() const
 {
-    return dimension.x;
+    return collider.getDimension().x;
 }
 
 float ColliderAABBComponent::height() const
 {
-    return dimension.y;
+    return collider.getDimension().y;
 }
 

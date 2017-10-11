@@ -1,15 +1,32 @@
 #pragma once
 
+#include "Collider/SAT_Collider.h"
+
 #include <SFML/Graphics.hpp>
 
 #include <vector>
 #include <limits>
 #include <unordered_set>
+#include <functional>
 
 class ColliderAABBComponent;
+class TransformComponent;
+class RigidBodyComponent;
+
+struct CollisionInfo {
+    TransformComponent* other;
+    SAT_Collider* other_collider;
+
+    sf::Vector2f resolveMovement;
+};
+
+struct TriggerInfo {
+    TransformComponent* other;
+    SAT_Collider* other_collider;
+};
 
 struct Raycast {
-    static constexpr float max_distance = 10000; // std::numeric_limits<float>::max() 
+    static constexpr float max_distance = 100000; // to avoid overflow... // std::numeric_limits<float>::max() 
     Raycast();
     Raycast(sf::Vector2f const& start, sf::Vector2f const& direction, float distance = max_distance);
 
@@ -22,31 +39,46 @@ struct Raycast {
     float distance;
 };
 
+struct ColliderOwner {
+    TransformComponent* tf;
+    RigidBodyComponent* rb;
+    SAT_Collider* collider;
+
+    std::function<void(CollisionInfo&)> onCollision;
+    std::function<void(TriggerInfo&)> onTrigger;
+    
+    bool operator == (ColliderOwner const& o) const;
+    bool operator != (ColliderOwner const& o) const;
+};
+
 struct RaycastInfo {
     RaycastInfo();
-    RaycastInfo(ColliderAABBComponent* collider, float distance);
+    RaycastInfo(TransformComponent* other, float distance);
 
     operator bool() const;
 
-    ColliderAABBComponent* collider;
+    TransformComponent* other;
     float distance;
 };
 
 class ColliderSpace {
 public:
 
-    void insert(ColliderAABBComponent& collider);
-    void remove(ColliderAABBComponent& collider);
+    void insert(ColliderOwner const& colider);
+    void remove(ColliderOwner const& collider);
+    void remove(TransformComponent* tf);
+    void updateRigidBody(TransformComponent* tf, RigidBodyComponent* rb);
 
     void update(sf::Time const& time);
 
-    RaycastInfo raycast(Raycast const& r, std::unordered_set<ColliderAABBComponent*> const& ignored = {});
+    RaycastInfo raycast(Raycast const& r, std::unordered_set<TransformComponent*> const& ignored = {});
     
 private:
 
-    void checkRaycastAABB(Raycast const& r, ColliderAABBComponent* c, RaycastInfo& info);
-    void AABBCollision(ColliderAABBComponent& c0, ColliderAABBComponent& c1);
-    void resolveCollision(ColliderAABBComponent& c0, ColliderAABBComponent& c1, sf::Vector2f const& movement);
-    
-    std::vector<ColliderAABBComponent*> m_colliders;
+    void checkCollision(ColliderOwner& c0, ColliderOwner& c1);
+    void checkRaycastCollision(Raycast const& r, ColliderOwner& c, RaycastInfo& info);
+    void resolveCollision(ColliderOwner& c0, ColliderOwner& c1, sf::Vector2f const& direction);
+    float getMTV(Projection const& p0, Projection const& p1) const;
+        
+    std::vector<ColliderOwner> m_colliders;
 };
