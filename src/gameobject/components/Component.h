@@ -6,6 +6,7 @@
 class GameObject;
 class CollisionInfo;
 class TriggerInfo;
+class DebugRenderer;
 
 class Component
 {

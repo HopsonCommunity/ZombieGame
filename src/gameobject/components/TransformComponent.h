@@ -22,4 +22,6 @@ public:
     bool renderTransform = false;
 
     void lookAt(TransformComponent* target);
+    sf::Vector2f front() const;
+    sf::Vector2f right() const;
 };

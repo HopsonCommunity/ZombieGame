@@ -59,3 +59,13 @@ std::unique_ptr<Component> TransformComponent::clone(GameObject& newGameObject)
 {
     return std::make_unique<TransformComponent>(newGameObject, position, rotation, renderTransform);
 }
+
+sf::Vector2f TransformComponent::front() const {
+    return { static_cast<float>(cos(math::radians(rotation))), 
+             static_cast<float>(sin(math::radians(rotation))) };
+}
+
+sf::Vector2f TransformComponent::right() const {
+    return { static_cast<float>(cos(math::radians(rotation + 90))), 
+             static_cast<float>(sin(math::radians(rotation + 90))) };
+}

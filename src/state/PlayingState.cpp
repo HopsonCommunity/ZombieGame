@@ -42,6 +42,7 @@ void PlayingState::render(sf::RenderTarget& renderTarget)
     for (size_t i=0; i<m_gameObjects.size(); ++i){
         m_gameObjects[i]->render(renderTarget);
     }
+    m_debugRenderer.draw(renderTarget);
 }
 
 void PlayingState::setup()
