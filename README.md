@@ -1,6 +1,6 @@
 # Community-Game
 This game is the second series of the community games by Matthew Hopson's Discord Community.
-This round, we're replicating a Zombie game that we found online.
+This time around, we're replicating a Zombie game that we found online.
 
 # How to join us
 
