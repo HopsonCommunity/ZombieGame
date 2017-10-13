@@ -4,31 +4,35 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <vector>
 #include <limits>
-#include <unordered_set>
 #include <functional>
+#include <vector>
+#include <unordered_set>
 
 class ColliderAABBComponent;
 class TransformComponent;
 class RigidBodyComponent;
 
-struct CollisionInfo {
+struct CollisionInfo 
+{
     TransformComponent* other;
     SAT_Collider* other_collider;
 
     sf::Vector2f resolveMovement;
 };
 
-struct TriggerInfo {
+struct TriggerInfo 
+{
     TransformComponent* other;
     SAT_Collider* other_collider;
 };
 
-struct Raycast {
+struct Raycast 
+{
     static constexpr float max_distance = 100000; // to avoid overflow... // std::numeric_limits<float>::max() 
-    Raycast();
+
     Raycast(sf::Vector2f const& start, sf::Vector2f const& direction, float distance = max_distance);
+    Raycast();
 
     bool is_infinite() const;
     sf::Vector2f at(float d) const;
@@ -39,21 +43,23 @@ struct Raycast {
     float distance;
 };
 
-struct ColliderOwner {
+struct ColliderOwner 
+{
+    bool operator == (ColliderOwner const& o) const;
+    bool operator != (ColliderOwner const& o) const;
+
     TransformComponent* tf;
     RigidBodyComponent* rb;
     SAT_Collider* collider;
 
     std::function<void(CollisionInfo&)> onCollision;
     std::function<void(TriggerInfo&)> onTrigger;
-    
-    bool operator == (ColliderOwner const& o) const;
-    bool operator != (ColliderOwner const& o) const;
 };
 
-struct RaycastInfo {
-    RaycastInfo();
+struct RaycastInfo 
+{
     RaycastInfo(TransformComponent* other, float distance);
+    RaycastInfo();
 
     operator bool() const;
 
@@ -61,7 +67,8 @@ struct RaycastInfo {
     float distance;
 };
 
-class ColliderSpace {
+class ColliderSpace 
+{
 public:
 
     void insert(ColliderOwner const& colider);
