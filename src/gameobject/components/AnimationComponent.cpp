@@ -1,8 +1,10 @@
 #include "AnimationComponent.h"
-#include "../GameObject.h"
-#include "../../resource/ResourceHolder.h"
 
-#include <iostream>
+#include "TransformComponent.h"
+
+#include "../GameObject.h"
+
+#include "../../resource/ResourceHolder.h"
 
 unsigned AnimationComponent::ID = 6;
 
@@ -41,7 +43,6 @@ void AnimationComponent::setup()
     rectSourceSprite.top=0;
     clock.restart();
     MaxFrameID=sprite.getTextureRect().width/frame_width;
-    std::cout<<MaxFrameID<<std::endl;
     frame_direction=1;
 }
 
