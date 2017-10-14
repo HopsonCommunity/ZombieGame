@@ -48,9 +48,10 @@ void PlayingState::render(sf::RenderTarget& renderTarget)
 
 void PlayingState::setup()
 {
-    for (int x = -10; x <= 10; ++x)
+    constexpr int RANGE = 25;
+    for (int x = -RANGE; x <= RANGE; ++x)
     {
-        for (int y = -10; y <= 10; ++y)
+        for (int y = -RANGE; y <= RANGE; ++y)
         {
             m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("grass"));
             auto ground = m_gameObjects.back();
