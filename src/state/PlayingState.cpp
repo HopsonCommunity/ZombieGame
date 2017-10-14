@@ -48,6 +48,15 @@ void PlayingState::render(sf::RenderTarget& renderTarget)
 
 void PlayingState::setup()
 {
+    for (int x = -10; x <= 10; ++x)
+    {
+        for (int y = -10; y <= 10; ++y)
+        {
+            m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("grass"));
+            auto ground = m_gameObjects.back();
+            ground->getComponent<TransformComponent>()->position = sf::Vector2f(x * 80, y * 80);
+        }
+    }
     m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("mouse"));
     m_mouse = m_gameObjects.back();
     m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("player"));
