@@ -38,10 +38,10 @@ void PlayerComponent::update(const sf::Time &deltaTime)
     }
 }
 
-void PlayerComponent::fixed_update(const sf::Time &deltaTime)
+void PlayerComponent::fixed_update(const sf::Time &)
 {}
 
-void PlayerComponent::render(sf::RenderTarget &renderTarget)
+void PlayerComponent::render(sf::RenderTarget &)
 {}
 
 std::unique_ptr<Component> PlayerComponent::clone(GameObject &newGameObject)

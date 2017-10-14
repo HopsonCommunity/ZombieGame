@@ -13,7 +13,7 @@ PlayingState::PlayingState(Game& game)
 }
 
 
-void PlayingState::handleEvents(sf::Event e)
+void PlayingState::handleEvents(sf::Event)
 {
 
 }

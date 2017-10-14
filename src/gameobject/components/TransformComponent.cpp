@@ -18,19 +18,13 @@ TransformComponent::TransformComponent(GameObject &owner, nlohmann::json json)
 }
 
 void TransformComponent::setup()
-{
+{}
 
-}
+void TransformComponent::update(const sf::Time& )
+{}
 
-void TransformComponent::update(const sf::Time& deltaTime)
-{
-
-}
-
-void TransformComponent::fixed_update(const sf::Time &deltaTime)
-{
-
-}
+void TransformComponent::fixed_update(const sf::Time &)
+{}
 
 void TransformComponent::render(sf::RenderTarget& renderTarget)
 {
@@ -60,12 +54,14 @@ std::unique_ptr<Component> TransformComponent::clone(GameObject& newGameObject)
     return std::make_unique<TransformComponent>(newGameObject, position, rotation, renderTransform);
 }
 
-sf::Vector2f TransformComponent::front() const {
+sf::Vector2f TransformComponent::front() const 
+{
     return { static_cast<float>(cos(math::radians(rotation))), 
              static_cast<float>(sin(math::radians(rotation))) };
 }
 
-sf::Vector2f TransformComponent::right() const {
+sf::Vector2f TransformComponent::right() const 
+{
     return { static_cast<float>(cos(math::radians(rotation + 90))), 
              static_cast<float>(sin(math::radians(rotation + 90))) };
 }

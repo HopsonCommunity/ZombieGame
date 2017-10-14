@@ -26,8 +26,8 @@ public:
     sf::Sprite sprite;
     sf::Vector2f offset_position;
     double offset_rotation;
-    int frame_width;
     sf::Vector2f scale;
+    int frame_width;
     sf::IntRect rectSourceSprite;
     sf::Clock clock;
     int frame_direction;

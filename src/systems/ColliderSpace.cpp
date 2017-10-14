@@ -67,7 +67,7 @@ void ColliderSpace::remove(ColliderOwner const& collider)
 
 void ColliderSpace::remove(TransformComponent* tf) 
 {
-    remove({tf, nullptr, nullptr});
+    remove({tf, nullptr, nullptr, nullptr, nullptr});
 }
 
 void ColliderSpace::updateRigidBody(TransformComponent* tf, RigidBodyComponent* rb) 
@@ -82,7 +82,7 @@ void ColliderSpace::updateRigidBody(TransformComponent* tf, RigidBodyComponent* 
     }
 }
 
-void ColliderSpace::update(sf::Time const& time)
+void ColliderSpace::update(sf::Time const&)
 {
     for (auto it0 = m_colliders.begin(); it0 != m_colliders.end(); ++it0) 
         for (auto it1 = it0 + 1; it1 != m_colliders.end(); ++it1) 
@@ -139,7 +139,7 @@ void ColliderSpace::checkRaycastCollision(Raycast const& r, ColliderOwner& co, R
     if (proj.first <= rayproj && rayproj <= proj.second) {
  
         auto pts = co.collider->getPoints(co.tf->position);
-        for (int i = 0; i < pts.size(); i++) 
+        for (unsigned int i = 0; i < pts.size(); i++) 
         {
             sf::Vector2f c = pts[i];
             sf::Vector2f m = pts[(i+1)%pts.size()] - c;
