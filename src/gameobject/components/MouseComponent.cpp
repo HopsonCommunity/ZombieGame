@@ -3,7 +3,7 @@
 #include "../../Game.h"
 unsigned  MouseComponent::ID = 4;
 
-MouseComponent::MouseComponent(GameObject &owner, nlohmann::json json)
+MouseComponent::MouseComponent(GameObject &owner, nlohmann::json )
         : Component(owner)
 {
 
@@ -21,7 +21,7 @@ void MouseComponent::setup()
     m_owner.getOwningState().getGamePointer()->getRenderWindow().setMouseCursorVisible(false);
 }
 
-void MouseComponent::update(const sf::Time &deltaTime)
+void MouseComponent::update(const sf::Time &)
 {
     if (cameraComponent!= nullptr && cameraTransform != nullptr)
     {
@@ -36,12 +36,12 @@ void MouseComponent::update(const sf::Time &deltaTime)
 
 }
 
-void MouseComponent::fixed_update(const sf::Time &deltaTime)
+void MouseComponent::fixed_update(const sf::Time &)
 {
 
 }
 
-void MouseComponent::render(sf::RenderTarget &renderTarget)
+void MouseComponent::render(sf::RenderTarget &)
 {
 }
 

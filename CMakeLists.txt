@@ -13,7 +13,6 @@ file(GLOB_RECURSE SRC
 
 # Define the executable
 add_executable(${PROJECT_NAME} ${SRC} src/gameobject/components/AnimationComponent.cpp src/gameobject/components/AnimationComponent.h)
-
 # Copy res folder to executable on build
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -31,6 +30,9 @@ set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(deps/SFML)
 include_directories(deps/SFML/include)
 target_link_libraries(${PROJECT_NAME} sfml-network sfml-graphics sfml-window sfml-system sfml-audio)
+
+# GCC Arguments 
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-pmf-conversions")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 14

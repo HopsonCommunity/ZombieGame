@@ -6,7 +6,7 @@
 
 unsigned TestComponent::ID = 0;
 
-TestComponent::TestComponent(GameObject& owner, nlohmann::json json)
+TestComponent::TestComponent(GameObject& owner, nlohmann::json )
 	: Component(owner)
 {
 
@@ -20,24 +20,16 @@ TestComponent::TestComponent(GameObject& owner, float someVal)
 }
 
 void TestComponent::setup()
-{
+{}
 
-}
+void TestComponent::update(const sf::Time& )
+{}
 
-void TestComponent::update(const sf::Time& deltaTime)
-{
+void TestComponent::fixed_update(const sf::Time &)
+{}
 
-}
-
-void TestComponent::fixed_update(const sf::Time &deltaTime)
-{
-
-}
-
-void TestComponent::render(sf::RenderTarget& renderTarget)
-{
-
-}
+void TestComponent::render(sf::RenderTarget& )
+{}
 
 std::unique_ptr<Component> TestComponent::clone(GameObject& newGameObject)
 {

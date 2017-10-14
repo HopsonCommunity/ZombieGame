@@ -23,10 +23,10 @@ void RendererComponent::setup()
     transform = m_owner.getComponent<TransformComponent>();
 }
 
-void RendererComponent::update(const sf::Time &deltaTime)
+void RendererComponent::update(const sf::Time &)
 {}
 
-void RendererComponent::fixed_update(const sf::Time &deltaTime)
+void RendererComponent::fixed_update(const sf::Time &)
 {}
 
 void RendererComponent::render(sf::RenderTarget &renderTarget)

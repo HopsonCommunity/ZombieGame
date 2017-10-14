@@ -45,7 +45,7 @@ void AnimationComponent::setup()
     frame_direction=1;
 }
 
-void AnimationComponent::update(const sf::Time& deltaTime)
+void AnimationComponent::update(const sf::Time& )
 {
     if (clock.getElapsedTime().asMilliseconds()>=FrameTime){
         CurrentFrameID+=frame_direction;
@@ -60,7 +60,7 @@ void AnimationComponent::update(const sf::Time& deltaTime)
     }
 }
 
-void AnimationComponent::fixed_update(const sf::Time &deltaTime)
+void AnimationComponent::fixed_update(const sf::Time &)
 {
 
 }

@@ -53,7 +53,7 @@ class GameObject
 
     private:
         std::unordered_map<unsigned int, std::unique_ptr<Component>> m_components;
-        GameState& m_owningState;
         unsigned int m_id;
+        GameState& m_owningState;
 };
 

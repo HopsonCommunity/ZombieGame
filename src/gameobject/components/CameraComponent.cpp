@@ -23,12 +23,12 @@ void CameraComponent::setup()
     transform = m_owner.getComponent<TransformComponent>();
 }
 
-void CameraComponent::update(const sf::Time &deltaTime)
+void CameraComponent::update(const sf::Time &)
 {
     view.setCenter(transform->position);
 }
 
-void CameraComponent::fixed_update(const sf::Time &deltaTime)
+void CameraComponent::fixed_update(const sf::Time &)
 {}
 
 void CameraComponent::render(sf::RenderTarget &renderTarget)

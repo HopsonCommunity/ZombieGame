@@ -25,13 +25,13 @@ void RigidBodyComponent::setup()
 
 void RigidBodyComponent::update(const sf::Time& deltaTime) 
 {
-    transform->position += velocity;
+    transform->position += velocity * (deltaTime.asMilliseconds() / 1000.f);
 }
 
-void RigidBodyComponent::fixed_update(const sf::Time &deltaTime) 
+void RigidBodyComponent::fixed_update(const sf::Time &) 
 {}
 
-void RigidBodyComponent::render(sf::RenderTarget& renderTarget) 
+void RigidBodyComponent::render(sf::RenderTarget& ) 
 {}
 
 std::unique_ptr<Component> RigidBodyComponent::clone(GameObject& newGameObject) 

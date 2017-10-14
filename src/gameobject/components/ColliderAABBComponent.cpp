@@ -42,10 +42,10 @@ void ColliderAABBComponent::setup()
     });
 }
 
-void ColliderAABBComponent::update(sf::Time const& time)
+void ColliderAABBComponent::update(sf::Time const& )
 {}
 
-void ColliderAABBComponent::fixed_update(sf::Time const& time)
+void ColliderAABBComponent::fixed_update(sf::Time const& )
 {}
 
 void ColliderAABBComponent::render(sf::RenderTarget& renderTarget) 
