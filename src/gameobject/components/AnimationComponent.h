@@ -1,8 +1,10 @@
 #pragma once
 
 #include <json.hpp>
+
 #include "Component.h"
-#include "TransformComponent.h"
+
+class TransformComponent;
 
 class AnimationComponent : public Component
 {
