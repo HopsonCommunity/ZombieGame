@@ -34,6 +34,6 @@ public:
 
 private:
 
-    TransformComponent* transform;
-    AABBCollider collider;
+    TransformComponent* m_transform;
+    AABBCollider m_collider;
 };

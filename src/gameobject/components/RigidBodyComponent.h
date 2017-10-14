@@ -7,7 +7,8 @@
 class GameObject;
 class TransformComponent;
 
-class RigidBodyComponent : public Component {
+class RigidBodyComponent : public Component 
+{
 public:
 
     RigidBodyComponent(GameObject& owner, nlohmann::json json);

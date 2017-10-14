@@ -2,11 +2,12 @@
 
 #include "SAT_Collider.h"
 
-class AABBCollider : public SAT_Collider {
+class AABBCollider : public SAT_Collider 
+{
 public:
 
-    AABBCollider();
     AABBCollider(sf::Vector2f const& origin, sf::Vector2f const& dimension);
+    AABBCollider();
     virtual ~AABBCollider();
 
     std::vector<sf::Vector2f> getPoints(sf::Vector2f const& offset = sf::Vector2f(0, 0)) const override;
@@ -18,6 +19,6 @@ public:
     
 private:
 
-    std::vector<sf::Vector2f> points;
+    std::vector<sf::Vector2f> m_points;
 
 };
