@@ -1,0 +1,8 @@
+{
+    "components": [{
+        "componentType": "FPS",
+        "position": [2, 99],
+        "font": "BPDots/BPdotsSquareBold",
+        "size": 20
+    }]
+}

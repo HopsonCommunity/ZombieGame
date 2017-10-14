@@ -12,6 +12,7 @@
 #include "components/AnimationComponent.h"
 #include "components/ColliderAABBComponent.h"
 #include "components/RigidBodyComponent.h"
+#include "components/FPSComponent.h"
 
 GameObjectFactory::GameObjectFactory(Game& game)
 : m_last_ID(0)
@@ -54,6 +55,8 @@ void GameObjectFactory::createTemplate(const std::string& name)
             gameObject->addComponent<ColliderAABBComponent>(std::make_unique<ColliderAABBComponent>(*gameObject, componentJSON));
         if (componentJSON["componentType"].get<std::string>() == "RigidBody")
             gameObject->addComponent<RigidBodyComponent>(std::make_unique<RigidBodyComponent>(*gameObject, componentJSON));
+        if (componentJSON["componentType"].get<std::string>() == "FPS")
+            gameObject->addComponent<FPSComponent>(std::make_unique<FPSComponent>(*gameObject, componentJSON));
     }
 
     templates[name] = std::move(gameObject);
