@@ -50,6 +50,16 @@ void PlayingState::render(Renderer& renderTarget)
 
 void PlayingState::setup()
 {
+    constexpr int RANGE = 25;
+    for (int x = -RANGE; x <= RANGE; ++x)
+    {
+        for (int y = -RANGE; y <= RANGE; ++y)
+        {
+            m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("grass"));
+            auto ground = m_gameObjects.back();
+            ground->getComponent<TransformComponent>()->position = sf::Vector2f(x * 80, y * 80);
+        }
+    }
     m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("mouse"));
     m_mouse = m_gameObjects.back();
     m_gameObjects.push_back(m_pGame->getGameObjectFactory().createGameObject("player"));
