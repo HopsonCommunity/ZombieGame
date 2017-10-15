@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <functional>
 
 class Renderer
 {
@@ -8,7 +9,20 @@ public:
 
     Renderer(sf::RenderTarget& renderer);
     Renderer();
-    
+
+    enum ZIndex : int
+    {
+        BACKGROUND = -255,
+        MIDDLEGROUND = 0,
+        FOREGROUND = 255,
+
+        HUD = 2048
+    };
+
+    void draw(std::pair<int, std::function<void(Renderer&)>>);
+
+    void render();
+
     void setRenderer(sf::RenderTarget& renderer);
 
     void setView(sf::View const& view);
@@ -31,6 +45,7 @@ public:
     void drawHUD(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, sf::RenderStates const& states = sf::RenderStates::Default);
 
 private:
+    std::vector<std::pair<int, std::function<void(Renderer&)>>> m_drawCallbacks;
 
     bool isInScreen(sf::FloatRect const& rect) const;
 

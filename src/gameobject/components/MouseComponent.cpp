@@ -41,7 +41,7 @@ void MouseComponent::fixed_update(const sf::Time &)
 
 }
 
-void MouseComponent::render(RenderingManager&)
+void MouseComponent::render(Renderer&)
 {
 }
 

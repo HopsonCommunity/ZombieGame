@@ -29,13 +29,13 @@ void RendererComponent::update(const sf::Time &)
 void RendererComponent::fixed_update(const sf::Time &)
 {}
 
-void RendererComponent::render(RenderingManager& renderTarget)
+void RendererComponent::render(Renderer& renderTarget)
 {
     sprite.setOrigin(offset_position);
     sprite.setPosition(transform->position);
     sprite.setRotation(transform->rotation + offset_rotation);
     sprite.setScale(scale);
-    renderTarget.draw({RenderingManager::ZIndex::FOREGROUND, [&](Renderer& renderer){
+    renderTarget.draw({Renderer::ZIndex::FOREGROUND, [&](Renderer& renderer){
         renderer.draw(sprite);
     }});
 }

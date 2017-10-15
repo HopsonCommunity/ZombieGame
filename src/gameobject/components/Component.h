@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../util/Renderer.h"
-#include "../../util/RenderingManager.h"
+#include "../../util/Renderer.h"
 
 #include <memory>
 #include <SFML/Graphics.hpp>
@@ -21,7 +21,7 @@ class Component
         virtual void setup() = 0;
         virtual void update(const sf::Time& deltaTime) = 0;
         virtual void fixed_update(const sf::Time &deltaTime) = 0;
-        virtual void render(RenderingManager& renderTarget) = 0;
+        virtual void render(Renderer& renderTarget) = 0;
 
         virtual std::unique_ptr<Component> clone(GameObject& newGameObject) = 0;
 

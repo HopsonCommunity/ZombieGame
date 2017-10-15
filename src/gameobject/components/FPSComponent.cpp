@@ -42,9 +42,9 @@ void FPSComponent::update(const sf::Time& dt)
 void FPSComponent::fixed_update(const sf::Time&)
 {}
 
-void FPSComponent::render(RenderingManager& renderTarget)
+void FPSComponent::render(Renderer& renderTarget)
 {
-    renderTarget.draw({RenderingManager::ZIndex::FOREGROUND, [&](Renderer& renderer){
+    renderTarget.draw({Renderer::ZIndex::FOREGROUND, [&](Renderer& renderer){
         renderer.draw(text);
     }});
 }

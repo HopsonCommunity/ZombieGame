@@ -66,7 +66,7 @@ void AnimationComponent::fixed_update(const sf::Time &)
 
 }
 
-void AnimationComponent::render(RenderingManager& renderTarget)
+void AnimationComponent::render(Renderer& renderTarget)
 {
     rectSourceSprite.left=frame_width*CurrentFrameID;
     sprite.setTextureRect(rectSourceSprite);
@@ -74,7 +74,7 @@ void AnimationComponent::render(RenderingManager& renderTarget)
     sprite.setPosition(transform->position);
     sprite.setRotation(transform->rotation + offset_rotation);
     sprite.setScale(scale);
-    renderTarget.draw({RenderingManager::ZIndex::FOREGROUND, [&](Renderer& renderer){
+    renderTarget.draw({Renderer::ZIndex::FOREGROUND, [&](Renderer& renderer){
         renderer.draw(sprite);
     }});
 }

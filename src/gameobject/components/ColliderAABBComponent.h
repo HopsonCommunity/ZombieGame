@@ -19,7 +19,7 @@ public:
     void setup() override;
     void update(const sf::Time& deltaTime) override;
     void fixed_update(const sf::Time &deltaTime) override;
-    void render(RenderingManager& renderTarget) override;
+    void render(Renderer& renderTarget) override;
     std::unique_ptr<Component> clone(GameObject& newGameObject) override;
 
     static unsigned ID;

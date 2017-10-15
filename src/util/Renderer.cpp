@@ -172,3 +172,21 @@ void Renderer::drawHUD(const sf::Vertex* vertices, std::size_t vertexCount, sf::
     m_renderer->draw(vs, vertexCount, type, states);
     delete [] vs;
 }
+
+void Renderer::draw(std::pair<int, std::function<void(Renderer&)>> drawable)
+{
+    m_drawCallbacks.push_back(drawable);
+}
+
+struct sortDrawables
+{
+    template<class T>
+    bool operator()(T const &a, T const &b) const { return b.first > a.first; }
+};
+
+void Renderer::render() {
+    std::sort(m_drawCallbacks.begin(), m_drawCallbacks.end(), sortDrawables());
+    for(std::pair<int, std::function<void(Renderer&)>>& drawable : m_drawCallbacks) {
+        drawable.second(*this);
+    }
+}

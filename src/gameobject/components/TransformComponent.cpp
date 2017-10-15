@@ -26,7 +26,7 @@ void TransformComponent::update(const sf::Time& )
 void TransformComponent::fixed_update(const sf::Time &)
 {}
 
-void TransformComponent::render(RenderingManager& renderTarget)
+void TransformComponent::render(Renderer& renderTarget)
 {
     if (renderTransform)
     {
@@ -34,7 +34,7 @@ void TransformComponent::render(RenderingManager& renderTarget)
         circle.setOrigin(circle.getRadius(), circle.getRadius());
         circle.setPosition(position.x, position.y);
         circle.setFillColor(sf::Color::White);
-        renderTarget.draw({RenderingManager::ZIndex::FOREGROUND, [&](Renderer& renderer){
+        renderTarget.draw({Renderer::ZIndex::FOREGROUND, [&](Renderer& renderer){
             renderer.draw(circle);
         }});
 
@@ -42,7 +42,7 @@ void TransformComponent::render(RenderingManager& renderTarget)
         rotationIndicator.setOrigin(rotationIndicator.getRadius(), rotationIndicator.getRadius());
 		rotationIndicator.setPosition(cos(math::radians(rotation)) * 10 + position.x, sin(math::radians(rotation)) * 10 + position.y);
         rotationIndicator.setFillColor(sf::Color::Red);
-        renderTarget.draw({RenderingManager::ZIndex::FOREGROUND, [&](Renderer& renderer){
+        renderTarget.draw({Renderer::ZIndex::FOREGROUND, [&](Renderer& renderer){
             renderer.draw(rotationIndicator);
         }});
     }
