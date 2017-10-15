@@ -4,8 +4,8 @@
 
 #include "RenderingManager.h"
 
-RenderingManager::RenderingManager(Renderer *renderer)
-        :   m_renderer(renderer) { }
+RenderingManager::RenderingManager(sf::RenderTarget& renderTarget)
+:   Renderer(renderTarget) { }
 
 void RenderingManager::draw(std::pair<int, std::function<void(Renderer&)>> drawable)
 {
@@ -21,10 +21,6 @@ struct sortDrawables
 void RenderingManager::render() {
     std::sort(m_drawCallbacks.begin(), m_drawCallbacks.end(), sortDrawables());
     for(std::pair<int, std::function<void(Renderer&)>>& drawable : m_drawCallbacks) {
-        drawable.second(*m_renderer);
+        drawable.second(*this);
     }
-}
-
-Renderer *RenderingManager::getRenderer() {
-    return m_renderer;
 }

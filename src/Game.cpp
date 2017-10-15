@@ -47,7 +47,7 @@ void Game::runGame()
 
         //Render
         m_window.clear();
-        RenderingManager renderingManager(new Renderer(m_window));
+        RenderingManager renderingManager(m_window);
         state.render(renderingManager);
         renderingManager.render();
         m_window.display();

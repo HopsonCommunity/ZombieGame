@@ -5,10 +5,10 @@
 #include <vector>
 #include <functional>
 
-class RenderingManager
+class RenderingManager : public Renderer
 {
     public:
-        RenderingManager(Renderer* renderer);
+        RenderingManager(sf::RenderTarget& renderer);
 
         enum ZIndex : int
         {
@@ -23,10 +23,6 @@ class RenderingManager
 
         void render();
 
-        Renderer* getRenderer();
-
     private:
         std::vector<std::pair<int, std::function<void(Renderer&)>>> m_drawCallbacks;
-
-        Renderer* m_renderer;
 };
