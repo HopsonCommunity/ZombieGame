@@ -46,3 +46,7 @@ obj/
 >>>>>>> 9990422359331f2330abfad091c9c755b5d21515
 
 \.vscode/
+
+\.idea/
+
+cmake-build-debug/
