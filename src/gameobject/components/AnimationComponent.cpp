@@ -66,7 +66,7 @@ void AnimationComponent::fixed_update(const sf::Time &)
 
 }
 
-void AnimationComponent::render(Renderer& renderTarget)
+void AnimationComponent::render(RenderingManager& renderTarget)
 {
     rectSourceSprite.left=frame_width*CurrentFrameID;
     sprite.setTextureRect(rectSourceSprite);
@@ -74,7 +74,9 @@ void AnimationComponent::render(Renderer& renderTarget)
     sprite.setPosition(transform->position);
     sprite.setRotation(transform->rotation + offset_rotation);
     sprite.setScale(scale);
-    renderTarget.draw(sprite);
+    renderTarget.draw({RenderingManager::ZIndex::FOREGROUND, [&](Renderer& renderer){
+        renderer.draw(sprite);
+    }});
 }
 
 std::unique_ptr<Component> AnimationComponent::clone(GameObject& newGameObject)

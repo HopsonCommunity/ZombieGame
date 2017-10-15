@@ -29,13 +29,15 @@ void RendererComponent::update(const sf::Time &)
 void RendererComponent::fixed_update(const sf::Time &)
 {}
 
-void RendererComponent::render(Renderer &renderTarget)
+void RendererComponent::render(RenderingManager& renderTarget)
 {
     sprite.setOrigin(offset_position);
     sprite.setPosition(transform->position);
     sprite.setRotation(transform->rotation + offset_rotation);
     sprite.setScale(scale);
-    renderTarget.draw(sprite);
+    renderTarget.draw({RenderingManager::ZIndex::FOREGROUND, [&](Renderer& renderer){
+        renderer.draw(sprite);
+    }});
 }
 
 std::unique_ptr<Component> RendererComponent::clone(GameObject& newGameObject)

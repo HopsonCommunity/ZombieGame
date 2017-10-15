@@ -28,7 +28,7 @@ void GameObject::fixed_update(const sf::Time& deltaTime)
 		it.second->fixed_update(deltaTime);
 }
 
-void GameObject::render(Renderer& renderTarget)
+void GameObject::render(RenderingManager& renderTarget)
 {
 	for (auto& it : m_components)
 		it.second->render(renderTarget);

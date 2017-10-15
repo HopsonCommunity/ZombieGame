@@ -39,13 +39,13 @@ void PlayingState::fixedUpdate(const sf::Time& deltaTime)
     }
 }
 
-void PlayingState::render(Renderer& renderTarget)
+void PlayingState::render(RenderingManager& renderTarget)
 {
-    renderTarget.setView(cameraComponent->view);
+    renderTarget.getRenderer()->setView(cameraComponent->view);
     for (size_t i=0; i<m_gameObjects.size(); ++i){
         m_gameObjects[i]->render(renderTarget);
     }
-    m_debugRenderer.draw(renderTarget);
+    m_debugRenderer.draw(*renderTarget.getRenderer());
 }
 
 void PlayingState::setup()

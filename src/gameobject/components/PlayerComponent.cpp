@@ -41,7 +41,7 @@ void PlayerComponent::update(const sf::Time &deltaTime)
 void PlayerComponent::fixed_update(const sf::Time &)
 {}
 
-void PlayerComponent::render(Renderer &)
+void PlayerComponent::render(RenderingManager&)
 {}
 
 std::unique_ptr<Component> PlayerComponent::clone(GameObject &newGameObject)

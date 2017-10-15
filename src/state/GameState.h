@@ -5,6 +5,7 @@
 #include "../systems/ColliderSpace.h"
 #include "../util/DebugRenderer.h"
 #include "../util/Renderer.h"
+#include "../util/RenderingManager.h"
 
 class Game;
 
@@ -24,7 +25,7 @@ class GameState : public NonCopyable
 
         virtual void setup() = 0;
 
-        virtual void render(Renderer& renderTarget)         = 0;
+        virtual void render(RenderingManager& renderTarget)         = 0;
 
         Game* getGamePointer() { return m_pGame;}
         ColliderSpace* getColliderSpace() { return &m_ColliderSpace; }

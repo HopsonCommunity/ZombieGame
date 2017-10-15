@@ -31,7 +31,7 @@ void CameraComponent::update(const sf::Time &)
 void CameraComponent::fixed_update(const sf::Time &)
 {}
 
-void CameraComponent::render(Renderer&)
+void CameraComponent::render(RenderingManager&)
 {}
 
 std::unique_ptr<Component> CameraComponent::clone(GameObject &newGameObject)

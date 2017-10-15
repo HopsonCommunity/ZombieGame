@@ -2,6 +2,7 @@
 
 #include "state/PlayingState.h"
 #include "util/Renderer.h"
+#include "util/RenderingManager.h"
 
 Game::Game()
 :   m_window    ({1280, 720}, "Zombie Game"),
@@ -46,8 +47,9 @@ void Game::runGame()
 
         //Render
         m_window.clear();
-        Renderer renderer(m_window);
-        state.render(renderer);
+        RenderingManager renderingManager(new Renderer(m_window));
+        state.render(renderingManager);
+        renderingManager.render();
         m_window.display();
 
         //done last so that window closing/ state pointer dangling does not cause crash

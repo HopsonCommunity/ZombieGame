@@ -2,6 +2,7 @@
 
 #include "GameState.h"
 #include "../Game.h"
+#include "../util/RenderingManager.h"
 
 class CameraComponent;
 
@@ -16,7 +17,7 @@ class PlayingState: public GameState
         void update     (const sf::Time& deltaTime) override;
         void fixedUpdate(const sf::Time& deltaTime) override;
 
-        void render(Renderer& renderTarget)         override;
+        void render(RenderingManager& renderTarget)         override;
 
         void setup() override;
 
