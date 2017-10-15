@@ -34,11 +34,13 @@ First, download the repository to your local machine.
 
 #### Linux
 As SFML will be built from sources, you will be required to have the SFML sources.
-Debian-based(eg. Lubuntu, Xubuntu, Ubuntu, ...): ``sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
-
-Arch Linux-based(eg. Manjaro): ``sudo pacman -S -Y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
-
+##### Debian-based(eg. Lubuntu, Xubuntu, Ubuntu, ...)
+``sudo apt-get install -y libpthread-stubs0-dev libgl1-mesa-dev libx11-dev libxrandr-dev libfreetype6-dev libglew1.5-dev libjpeg8-dev libsndfile1-dev libopenal-dev libudev-dev libxcb-image0-dev libjpeg-dev libflac-dev``
 The -y parameter works by automatically accepting the requests for approval.
+
+##### Arch Linux-based(eg. Manjaro)
+``sudo pacman -S libpthread-stubs libx11 libxrandr libjpeg libsndfile libudev0 libxcb mesa libxrandr freetype2 glew libjpeg-turbo openal flac``
+
 
 Other distributions will follow. The dependency names are listed here:
 https://www.sfml-dev.org/tutorials/2.4/compile-with-cmake.php

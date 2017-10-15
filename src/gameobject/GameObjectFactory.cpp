@@ -39,23 +39,23 @@ void GameObjectFactory::createTemplate(const std::string& name)
 
         if (componentJSON["componentType"].get<std::string>() == "Test")
             gameObject->addComponent<TestComponent>(std::make_unique<TestComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "Renderer")
+        else if (componentJSON["componentType"].get<std::string>() == "Renderer")
             gameObject->addComponent<RendererComponent>(std::make_unique<RendererComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "Transform")
+        else if (componentJSON["componentType"].get<std::string>() == "Transform")
             gameObject->addComponent<TransformComponent>(std::make_unique<TransformComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "Player")
+        else if (componentJSON["componentType"].get<std::string>() == "Player")
             gameObject->addComponent<PlayerComponent>(std::make_unique<PlayerComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "Mouse")
+        else if (componentJSON["componentType"].get<std::string>() == "Mouse")
             gameObject->addComponent<MouseComponent>(std::make_unique<MouseComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "Camera")
+        else if (componentJSON["componentType"].get<std::string>() == "Camera")
             gameObject->addComponent<CameraComponent>(std::make_unique<CameraComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "Animation")
+        else if (componentJSON["componentType"].get<std::string>() == "Animation")
             gameObject->addComponent<AnimationComponent>(std::make_unique<AnimationComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "ColliderAABB")
+        else if (componentJSON["componentType"].get<std::string>() == "ColliderAABB")
             gameObject->addComponent<ColliderAABBComponent>(std::make_unique<ColliderAABBComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "RigidBody")
+        else if (componentJSON["componentType"].get<std::string>() == "RigidBody")
             gameObject->addComponent<RigidBodyComponent>(std::make_unique<RigidBodyComponent>(*gameObject, componentJSON));
-        if (componentJSON["componentType"].get<std::string>() == "FPS")
+        else if (componentJSON["componentType"].get<std::string>() == "FPS")
             gameObject->addComponent<FPSComponent>(std::make_unique<FPSComponent>(*gameObject, componentJSON));
     }
 
