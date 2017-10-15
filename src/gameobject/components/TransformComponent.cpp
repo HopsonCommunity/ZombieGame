@@ -26,7 +26,7 @@ void TransformComponent::update(const sf::Time& )
 void TransformComponent::fixed_update(const sf::Time &)
 {}
 
-void TransformComponent::render(sf::RenderTarget& renderTarget)
+void TransformComponent::render(Renderer& renderTarget)
 {
     if (renderTransform)
     {

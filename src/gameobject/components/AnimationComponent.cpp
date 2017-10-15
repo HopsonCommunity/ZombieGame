@@ -66,7 +66,7 @@ void AnimationComponent::fixed_update(const sf::Time &)
 
 }
 
-void AnimationComponent::render(sf::RenderTarget& renderTarget)
+void AnimationComponent::render(Renderer& renderTarget)
 {
     rectSourceSprite.left=frame_width*CurrentFrameID;
     sprite.setTextureRect(rectSourceSprite);

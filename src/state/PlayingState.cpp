@@ -5,6 +5,7 @@
 #include "../gameobject/components/CameraComponent.h"
 #include "../gameobject/components/MouseComponent.h"
 #include "../gameobject/components/FPSComponent.h"
+#include "../gameobject/components/CameraComponent.h"
 
 PlayingState::PlayingState(Game& game)
 :   GameState   (game)
@@ -38,8 +39,9 @@ void PlayingState::fixedUpdate(const sf::Time& deltaTime)
     }
 }
 
-void PlayingState::render(sf::RenderTarget& renderTarget)
+void PlayingState::render(Renderer& renderTarget)
 {
+    renderTarget.setView(cameraComponent->view);
     for (size_t i=0; i<m_gameObjects.size(); ++i){
         m_gameObjects[i]->render(renderTarget);
     }
@@ -58,8 +60,9 @@ void PlayingState::setup()
     m_fps = m_gameObjects.back();
 
     m_player->getComponent<PlayerComponent>()->mouse = m_mouse->getComponent<TransformComponent>();
+    cameraComponent = m_player->getComponent<CameraComponent>();
     m_mouse->getComponent<MouseComponent>()->cameraTransform = m_player->getComponent<TransformComponent>();
-    m_mouse->getComponent<MouseComponent>()->cameraComponent = m_player->getComponent<CameraComponent>();
-    m_fps->getComponent<FPSComponent>()->camera = m_player->getComponent<CameraComponent>();
+    m_mouse->getComponent<MouseComponent>()->cameraComponent = cameraComponent;
+    m_fps->getComponent<FPSComponent>()->camera = cameraComponent;
 
 }

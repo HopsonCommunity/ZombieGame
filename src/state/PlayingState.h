@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "../Game.h"
 
+class CameraComponent;
 
 class PlayingState: public GameState
 {
@@ -15,7 +16,7 @@ class PlayingState: public GameState
         void update     (const sf::Time& deltaTime) override;
         void fixedUpdate(const sf::Time& deltaTime) override;
 
-        void render(sf::RenderTarget& renderTarget) override;
+        void render(Renderer& renderTarget)         override;
 
         void setup() override;
 
@@ -27,5 +28,7 @@ class PlayingState: public GameState
         std::shared_ptr<GameObject> m_mouse;
         std::shared_ptr<GameObject> m_building;
         std::shared_ptr<GameObject> m_fps;
+
+        CameraComponent* cameraComponent;
     };
 

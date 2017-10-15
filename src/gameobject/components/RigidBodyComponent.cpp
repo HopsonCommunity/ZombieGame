@@ -31,7 +31,7 @@ void RigidBodyComponent::update(const sf::Time& deltaTime)
 void RigidBodyComponent::fixed_update(const sf::Time &) 
 {}
 
-void RigidBodyComponent::render(sf::RenderTarget& ) 
+void RigidBodyComponent::render(Renderer& ) 
 {}
 
 std::unique_ptr<Component> RigidBodyComponent::clone(GameObject& newGameObject) 

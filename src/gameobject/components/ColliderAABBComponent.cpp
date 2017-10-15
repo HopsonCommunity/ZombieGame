@@ -48,7 +48,7 @@ void ColliderAABBComponent::update(sf::Time const& )
 void ColliderAABBComponent::fixed_update(sf::Time const& )
 {}
 
-void ColliderAABBComponent::render(sf::RenderTarget& renderTarget) 
+void ColliderAABBComponent::render(Renderer& renderTarget) 
 {
     if (ColliderAABBComponent::collider_wire_frame) 
     {

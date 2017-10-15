@@ -29,7 +29,7 @@ void RendererComponent::update(const sf::Time &)
 void RendererComponent::fixed_update(const sf::Time &)
 {}
 
-void RendererComponent::render(sf::RenderTarget &renderTarget)
+void RendererComponent::render(Renderer &renderTarget)
 {
     sprite.setOrigin(offset_position);
     sprite.setPosition(transform->position);

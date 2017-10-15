@@ -28,7 +28,7 @@ void TestComponent::update(const sf::Time& )
 void TestComponent::fixed_update(const sf::Time &)
 {}
 
-void TestComponent::render(sf::RenderTarget& )
+void TestComponent::render(Renderer& )
 {}
 
 std::unique_ptr<Component> TestComponent::clone(GameObject& newGameObject)
