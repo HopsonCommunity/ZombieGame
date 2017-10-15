@@ -39,7 +39,7 @@ As SFML will be built from sources, you will be required to have the SFML source
 The -y parameter works by automatically accepting the requests for approval.
 
 ##### Arch Linux-based(eg. Manjaro)
-``sudo pacman -S libpthread-stubs libx11 libxrandr libjpeg libsndfile libudev0 libxcb mesa libxrandr freetype2 glew libjpeg6-turbo openal flac``
+``sudo pacman -S libpthread-stubs libx11 libxrandr libjpeg libsndfile libudev0 libxcb mesa libxrandr freetype2 glew libjpeg-turbo openal flac``
 
 
 Other distributions will follow. The dependency names are listed here:
