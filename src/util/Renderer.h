@@ -34,7 +34,7 @@ private:
 
     bool isInScreen(sf::FloatRect const& rect) const;
 
-    sf::RenderTarget* renderer;
-    sf::IntRect screenRect;
+    sf::RenderTarget* m_renderer;
+    sf::IntRect m_screenRect;
 
 };
