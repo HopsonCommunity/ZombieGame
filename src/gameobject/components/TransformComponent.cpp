@@ -31,20 +31,16 @@ void TransformComponent::render(Renderer& renderTarget)
     if (renderTransform)
     {
         static sf::CircleShape circle = sf::CircleShape(6);
-        renderTarget.draw({Renderer::ZIndex::HUD+1, [&](Renderer& renderer){
-            circle.setOrigin(circle.getRadius(), circle.getRadius());
-            circle.setPosition(position.x, position.y);
-            circle.setFillColor(sf::Color::White);
-            renderer.draw(circle);
-        }});
+        circle.setOrigin(circle.getRadius(), circle.getRadius());
+        circle.setPosition(position.x, position.y);
+        circle.setFillColor(sf::Color::White);
+        renderTarget.draw(circle, ZIndex::DEBUG);
 
         static sf::CircleShape rotationIndicator = sf::CircleShape(2);
-        renderTarget.draw({Renderer::ZIndex::HUD+2, [&](Renderer& renderer){
-            rotationIndicator.setOrigin(rotationIndicator.getRadius(), rotationIndicator.getRadius());
-            rotationIndicator.setPosition(cos(math::radians(rotation)) * 10 + position.x, sin(math::radians(rotation)) * 10 + position.y);
-            rotationIndicator.setFillColor(sf::Color::Red);
-            renderer.draw(rotationIndicator);
-        }});
+        rotationIndicator.setOrigin(rotationIndicator.getRadius(), rotationIndicator.getRadius());
+        rotationIndicator.setPosition(cos(math::radians(rotation)) * 10 + position.x, sin(math::radians(rotation)) * 10 + position.y);
+        rotationIndicator.setFillColor(sf::Color::Red);
+        renderTarget.draw(rotationIndicator, ZIndex::DEBUG);
     }
 }
 

@@ -4,12 +4,14 @@
 #include "Component.h"
 #include "TransformComponent.h"
 
+#include "../../util/Renderer.h"
+
 class RendererComponent : public Component
 {
 public:
     RendererComponent(GameObject& owner, nlohmann::json json);
     RendererComponent(GameObject& owner, std::string textureName, sf::Vector2f offset_position, double offset_rotation,
-                      sf::Vector2f scale, int zIndex);
+                      sf::Vector2f scale, ZIndex_t zIndex);
 
     void setup() override;
     void update(const sf::Time& deltaTime) override;
@@ -25,7 +27,7 @@ public:
     sf::Vector2f offset_position;
     double offset_rotation;
     sf::Vector2f scale;
-    int zIndex = 0;
+    ZIndex_t zIndex = 0;
 
     TransformComponent* transform;
 };

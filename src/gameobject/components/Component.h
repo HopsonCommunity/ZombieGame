@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../util/Renderer.h"
-#include "../../util/Renderer.h"
 
 #include <memory>
 #include <SFML/Graphics.hpp>

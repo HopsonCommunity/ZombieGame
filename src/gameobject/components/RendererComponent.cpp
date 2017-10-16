@@ -11,10 +11,10 @@ RendererComponent::RendererComponent(GameObject &owner, nlohmann::json json) : C
     offset_position = sf::Vector2f(json["offset_position"][0], json["offset_position"][1]);
     offset_rotation = json["offset_rotation"];
     scale = sf::Vector2f(json["scale"][0], json["scale"][1]);
-    zIndex = json["zIndex"];
+    zIndex = static_cast<ZIndex_t>(json["zIndex"]);
 }
 RendererComponent::RendererComponent(GameObject &owner, std::string textureName, sf::Vector2f offset_position,
-                                     double offset_rotation, sf::Vector2f scale, int zIndex)
+                                     double offset_rotation, sf::Vector2f scale, ZIndex_t zIndex)
         : Component(owner)
         , offset_position(offset_position)
         , offset_rotation(offset_rotation)
@@ -41,9 +41,7 @@ void RendererComponent::render(Renderer& renderTarget)
     sprite.setPosition(transform->position);
     sprite.setRotation(transform->rotation + offset_rotation);
     sprite.setScale(scale);
-    renderTarget.draw({zIndex, [&](Renderer& renderer){
-        renderer.draw(sprite);
-    }});
+    renderTarget.draw(sprite, zIndex);
 }
 
 std::unique_ptr<Component> RendererComponent::clone(GameObject& newGameObject)

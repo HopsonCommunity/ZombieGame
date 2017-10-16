@@ -44,9 +44,7 @@ void FPSComponent::fixed_update(const sf::Time&)
 
 void FPSComponent::render(Renderer& renderTarget)
 {
-    renderTarget.draw({Renderer::ZIndex::HUD, [&](Renderer& renderer){
-        renderer.drawHUD(text);
-    }});
+    renderTarget.drawHUD(text);
 }
 
 std::unique_ptr<Component> FPSComponent::clone(GameObject& newGameObject)

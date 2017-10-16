@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Renderer.h"
 
 Renderer::Renderer(sf::RenderTarget& renderer)
@@ -47,43 +46,67 @@ bool Renderer::isInScreen(sf::FloatRect const& rect) const
     );
 }
 
-void Renderer::draw(sf::Shape& shape, sf::RenderStates const& states)
+void Renderer::draw(sf::Shape const& shape, ZIndex_t zindex, sf::RenderStates const& states)
 {
     auto bounds = shape.getGlobalBounds();
     if(isInScreen(bounds))
     {
-        m_renderer->draw(shape, states);
+        m_drawCallbacks.push_back({
+            zindex,
+            [&shape, states] (sf::RenderTarget& renderer)
+            {
+                renderer.draw(shape, states);
+            }
+        });
     }
 }
 
-void Renderer::draw(sf::Sprite const& sprite, sf::RenderStates const& states)
+void Renderer::draw(sf::Sprite const& sprite, ZIndex_t zindex, sf::RenderStates const& states)
 {
     auto bounds = sprite.getGlobalBounds();
     if(isInScreen(bounds))
     {
-        m_renderer->draw(sprite, states);
+        m_drawCallbacks.push_back({
+            zindex,
+            [&sprite, states] (sf::RenderTarget& renderer)
+            {
+                renderer.draw(sprite, states);
+            }
+        });
     }
 }
 
-void Renderer::draw(sf::Text const& text, sf::RenderStates const& states)
+void Renderer::draw(sf::Text const& text, ZIndex_t zindex, sf::RenderStates const& states)
 {
     auto bounds = text.getGlobalBounds();
     if(isInScreen(bounds))
     {
-        m_renderer->draw(text, states);
+        m_drawCallbacks.push_back({
+            zindex,
+            [&text, states] (sf::RenderTarget& renderer)
+            {
+                renderer.draw(text, states);
+            }
+        });
     }
 }
 
-void Renderer::draw(sf::VertexArray const& vs, sf::RenderStates const& states)
+void Renderer::draw(sf::VertexArray const& vs, ZIndex_t zindex, sf::RenderStates const& states)
 {
     auto bounds = vs.getBounds();
     if(isInScreen(bounds))
     {
-        m_renderer->draw(vs, states);
+        m_drawCallbacks.push_back({
+            zindex,
+            [&vs, states] (sf::RenderTarget& renderer)
+            {
+                renderer.draw(vs, states);
+            }
+        });
     }
 }
 
-void Renderer::draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, sf::RenderStates const& states)
+void Renderer::draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, ZIndex_t zindex, sf::RenderStates const& states)
 {
     sf::FloatRect rect(0, 0, 0, 0);
     for(unsigned int i = 0; i < vertexCount; ++i)
@@ -99,35 +122,61 @@ void Renderer::draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::Pri
 
     if(isInScreen(rect))
     {
+        m_drawCallbacks.push_back({
+            zindex,
+            [vertices, vertexCount, type, states] (sf::RenderTarget& renderer)
+            {
+                renderer.draw(vertices, vertexCount, type, states);
+            }
+        });
+    
         m_renderer->draw(vertices, vertexCount, type, states);
     }
 }
 
-void Renderer::drawHUD(sf::CircleShape& shape, sf::RenderStates const& states)
+void Renderer::drawHUD(sf::CircleShape const& shape, sf::RenderStates const& states)
 {
     sf::CircleShape s = shape;
     auto px = s.getPosition() / 100.f;
     auto pw = m_renderer->mapPixelToCoords({static_cast<int>(px.x * m_screenRect.width), static_cast<int>(px.y * m_screenRect.height)});
     s.setPosition(pw);
-    m_renderer->draw(s, states);
+    m_drawCallbacks.push_back({
+        ZIndex_t(ZIndex::HUD),
+        [s, states] (sf::RenderTarget& renderer)
+        {
+            renderer.draw(s, states);
+        }
+    });
 }
 
-void Renderer::drawHUD(sf::RectangleShape& shape, sf::RenderStates const& states)
+void Renderer::drawHUD(sf::RectangleShape const& shape, sf::RenderStates const& states)
 {
     sf::RectangleShape s = shape;
     auto px = s.getPosition() / 100.f;
     auto pw = m_renderer->mapPixelToCoords({static_cast<int>(px.x * m_screenRect.width), static_cast<int>(px.y * m_screenRect.height)});
     s.setPosition(pw);
-    m_renderer->draw(s, states);
+    m_drawCallbacks.push_back({
+        ZIndex_t(ZIndex::HUD),
+        [s, states] (sf::RenderTarget& renderer)
+        {
+            renderer.draw(s, states);
+        }
+    });
 }
 
-void Renderer::drawHUD(sf::ConvexShape& shape, sf::RenderStates const& states)
+void Renderer::drawHUD(sf::ConvexShape const& shape, sf::RenderStates const& states)
 {
     sf::ConvexShape s = shape;
     auto px = s.getPosition() / 100.f;
     auto pw = m_renderer->mapPixelToCoords({static_cast<int>(px.x * m_screenRect.width), static_cast<int>(px.y * m_screenRect.height)});
     s.setPosition(pw);
-    m_renderer->draw(s, states);
+    m_drawCallbacks.push_back({
+        ZIndex_t(ZIndex::HUD),
+        [s, states] (sf::RenderTarget& renderer)
+        {
+            renderer.draw(s, states);
+        }
+    });
 }
 
 void Renderer::drawHUD(sf::Sprite const& sprite, sf::RenderStates const& states)
@@ -136,7 +185,13 @@ void Renderer::drawHUD(sf::Sprite const& sprite, sf::RenderStates const& states)
     auto px = s.getPosition() / 100.f;
     auto pw = m_renderer->mapPixelToCoords({static_cast<int>(px.x * m_screenRect.width), static_cast<int>(px.y * m_screenRect.height)});
     s.setPosition(pw);
-    m_renderer->draw(s, states);
+    m_drawCallbacks.push_back({
+        ZIndex_t(ZIndex::HUD),
+        [s, states] (sf::RenderTarget& renderer)
+        {
+            renderer.draw(s, states);
+        }
+    });
 }
 
 void Renderer::drawHUD(sf::Text const& text, sf::RenderStates const& states)
@@ -145,7 +200,13 @@ void Renderer::drawHUD(sf::Text const& text, sf::RenderStates const& states)
     auto px = text.getPosition() / 100.f;
     auto pw = m_renderer->mapPixelToCoords({static_cast<int>(px.x * m_screenRect.width), static_cast<int>(px.y * m_screenRect.height)});
     t.setPosition(pw);
-    m_renderer->draw(t, states);
+    m_drawCallbacks.push_back({
+        ZIndex_t(ZIndex::HUD),
+        [t, states] (sf::RenderTarget& renderer)
+        {
+            renderer.draw(t, states);
+        }
+    });
 }
 
 void Renderer::drawHUD(sf::VertexArray const& vs, sf::RenderStates const& states)
@@ -157,7 +218,13 @@ void Renderer::drawHUD(sf::VertexArray const& vs, sf::RenderStates const& states
         auto pw = m_renderer->mapPixelToCoords({static_cast<int>(px.x * m_screenRect.width), static_cast<int>(px.y * m_screenRect.height)});
         v[i].position = pw;
     }
-    m_renderer->draw(v, states);
+    m_drawCallbacks.push_back({
+        ZIndex_t(ZIndex::HUD),
+        [v, states] (sf::RenderTarget& renderer)
+        {
+            renderer.draw(v, states);
+        }
+    });
 }
 
 void Renderer::drawHUD(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, sf::RenderStates const& states)
@@ -170,29 +237,28 @@ void Renderer::drawHUD(const sf::Vertex* vertices, std::size_t vertexCount, sf::
         vs[i].position = pw;
     }
 
-    m_renderer->draw(vs, vertexCount, type, states);
-    delete [] vs;
-}
+    m_drawCallbacks.push_back({
+        ZIndex_t(ZIndex::HUD),
+        [vs, vertexCount, type, states] (sf::RenderTarget& renderer)
+        {
+            renderer.draw(vs, vertexCount, type, states);
+        }
+    });
 
-void Renderer::draw(std::pair<int, std::function<void(Renderer&)>> drawable)
-{
-    m_drawCallbacks.push_back(drawable);
+    delete [] vs;
 }
 
 struct sortDrawables
 {
     template<class T>
-    bool operator()(T const &a, T const &b) const { return (int)b.first > (int)a.first; }
+    bool operator()(T const &a, T const &b) const { return b.first > a.first; }
 };
 
 void Renderer::render()
 {
     std::sort(m_drawCallbacks.begin(), m_drawCallbacks.end(), sortDrawables());
-//    std::cout << "\n\n\n\n\n\n\n" << std::endl;
-    for(std::pair<int, std::function<void(Renderer&)>>& drawable : m_drawCallbacks) {
-        drawable.second(*this);
-
-//        if (drawable.first != 0) std::cout << (int)drawable.first << std::endl;
+    for(auto& drawable : m_drawCallbacks) 
+    {
+        drawable.second(*m_renderer);
     }
-//    std::exit(0);
 }
