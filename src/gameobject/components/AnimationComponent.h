@@ -3,6 +3,7 @@
 #include <json.hpp>
 
 #include "Component.h"
+#include "../../util/Renderer.h"
 
 class TransformComponent;
 
@@ -11,12 +12,12 @@ class AnimationComponent : public Component
 public:
     AnimationComponent(GameObject& owner, nlohmann::json json);
     AnimationComponent  (GameObject& owner, float framesPerSecond, int currentFrameID, std::string textureName,
-                         sf::Vector2f offset_position, double offset_rotation, sf::Vector2f scale, int frame_width);
+                         sf::Vector2f offset_position, double offset_rotation, sf::Vector2f scale, int frame_width, ZIndex_t zIndex);
 
     void setup() override;
     void update(const sf::Time& deltaTime) override;
     void fixed_update(const sf::Time &deltaTime) override;
-    void render(sf::RenderTarget& renderTarget) override;
+    void render(Renderer& renderTarget) override;
     std::unique_ptr<Component> clone(GameObject& newGameObject) override;
 
     static unsigned ID;
@@ -33,6 +34,7 @@ public:
     sf::IntRect rectSourceSprite;
     sf::Clock clock;
     int frame_direction;
+    ZIndex_t zIndex;
 
     TransformComponent* transform;
 };

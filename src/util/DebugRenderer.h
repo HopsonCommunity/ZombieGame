@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../systems/ColliderSpace.h"
+#include "Renderer.h"
 
 #include <vector>
 
@@ -19,7 +20,7 @@ public:
     void drawRaycast(Raycast const& r, Options const& options = Options());
     void drawText(sf::Text const& text, Options const& options = Options());
 
-    void draw(sf::RenderTarget& renderer);
+    void draw(Renderer& renderer);
 
 private:
 

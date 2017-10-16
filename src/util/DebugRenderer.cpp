@@ -56,7 +56,7 @@ void DebugRenderer::drawText(sf::Text const& t, DebugRenderer::Options const& op
     m_toDraw.emplace_back(t, options);
 }
 
-void DebugRenderer::draw(sf::RenderTarget& renderer) 
+void DebugRenderer::draw(Renderer& renderer) 
 {
     for (auto& d : m_toDraw) 
     {

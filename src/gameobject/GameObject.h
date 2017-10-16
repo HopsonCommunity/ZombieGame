@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "components/Component.h"
+#include "../util/Renderer.h"
 
 class GameState;
 class CollisionInfo;
@@ -42,7 +43,7 @@ class GameObject
         void setup();
         void update(const sf::Time& deltaTime);
         void fixed_update(const sf::Time& deltaTime);
-        void render(sf::RenderTarget& renderTarget);
+        void render(Renderer& renderTarget);
 
         std::unique_ptr<GameObject> clone(GameState& owningState, unsigned int id);
 

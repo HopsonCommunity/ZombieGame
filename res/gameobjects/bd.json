@@ -3,8 +3,9 @@
             "componentType": "Renderer",
             "texture": "building",
             "offset_position": [16, 20],
-            "offset_rotation": 180,
-            "scale": [2, 2]
+            "offset_rotation": 0,
+            "scale": [2, 2],
+            "zIndex": 259
         },
         {
             "componentType": "Transform",

@@ -11,7 +11,8 @@
             "offset_position": [16, 20],
             "offset_rotation": 90,
             "frame_width": 32,
-            "scale": [2, 2]
+            "scale": [2, 2],
+            "zIndex": 2000
         },
         {
             "componentType": "Transform",

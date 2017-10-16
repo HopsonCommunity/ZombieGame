@@ -17,7 +17,7 @@ public:
     virtual void setup();
     virtual void update(const sf::Time& deltaTime);
     virtual void fixed_update(const sf::Time &deltaTime);
-    virtual void render(sf::RenderTarget& renderTarget);
+    virtual void render(Renderer& renderTarget);
 
     virtual std::unique_ptr<Component> clone(GameObject& newGameObject);
 
