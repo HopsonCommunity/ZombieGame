@@ -7,7 +7,15 @@
       "componentType": "Transform",
       "position": [0,0],
       "rotation": 270,
-      "renderTransform": true
+      "renderTransform": false
+    },
+    {
+      "componentType": "Renderer",
+      "texture": "crosshair",
+      "offset_position": [4, 4],
+      "offset_rotation": 0,
+      "scale": [2, 2],
+      "zIndex": 0
     }
   ]
 }
