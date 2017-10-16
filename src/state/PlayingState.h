@@ -2,6 +2,7 @@
 
 #include "GameState.h"
 #include "../Game.h"
+#include "../util/Renderer.h"
 
 class CameraComponent;
 

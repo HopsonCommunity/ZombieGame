@@ -1,6 +1,8 @@
+#include <iostream>
 #include "Game.h"
 
 #include "state/PlayingState.h"
+#include "util/Renderer.h"
 #include "util/Renderer.h"
 
 Game::Game()
@@ -46,8 +48,9 @@ void Game::runGame()
 
         //Render
         m_window.clear();
-        Renderer renderer(m_window);
-        state.render(renderer);
+        Renderer Renderer(m_window);
+        state.render(Renderer);
+        Renderer.render();
         m_window.display();
 
         //done last so that window closing/ state pointer dangling does not cause crash

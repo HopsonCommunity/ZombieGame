@@ -48,7 +48,7 @@ void ColliderAABBComponent::update(sf::Time const& )
 void ColliderAABBComponent::fixed_update(sf::Time const& )
 {}
 
-void ColliderAABBComponent::render(Renderer& renderTarget) 
+void ColliderAABBComponent::render(Renderer& renderTarget)
 {
     if (ColliderAABBComponent::collider_wire_frame) 
     {
@@ -65,7 +65,7 @@ void ColliderAABBComponent::render(Renderer& renderTarget)
         }
         vs[4].position = m_collider.getPoints()[0] + m_transform->position;
         vs[4].color = sf::Color::Green;
-        renderTarget.draw(vs, 5, sf::PrimitiveType::LinesStrip);
+        renderTarget.draw(vs, 5, sf::PrimitiveType::LinesStrip, ZIndex::FOREGROUND);
 
         sf::Vertex vns[4];
         i = 0;
@@ -78,7 +78,7 @@ void ColliderAABBComponent::render(Renderer& renderTarget)
             vns[i+1].color = sf::Color::Magenta;
             i += 2;
         }
-        renderTarget.draw(vns, 8, sf::PrimitiveType::Lines);
+        renderTarget.draw(vns, 8, sf::PrimitiveType::Lines, ZIndex::FOREGROUND);
     }
 }
 

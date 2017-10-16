@@ -20,16 +20,18 @@ AnimationComponent::AnimationComponent(GameObject& owner, nlohmann::json json)
     offset_rotation = json["offset_rotation"];
     frame_width = json["frame_width"];
     scale = sf::Vector2f(json["scale"][0], json["scale"][1]);
+    zIndex = static_cast<ZIndex_t>(json["zIndex"]);
 }
 
 AnimationComponent::AnimationComponent(GameObject& owner, float framesPerSecond, int currentFrameID,
                                        std::string textureName, sf::Vector2f offset_position, double offset_rotation,
-                                       sf::Vector2f scale, int frame_width)
+                                       sf::Vector2f scale, int frame_width, ZIndex_t zIndex)
         : Component(owner)
         , FrameTime(framesPerSecond/1000.f)
         , CurrentFrameID(currentFrameID)
         , offset_position(offset_position), offset_rotation(offset_rotation), scale(scale)
         , frame_width(frame_width)
+        , zIndex(zIndex)
 {
     sprite = sf::Sprite(ResourceHolder::get().textures.get(textureName));
 }
@@ -74,12 +76,12 @@ void AnimationComponent::render(Renderer& renderTarget)
     sprite.setPosition(transform->position);
     sprite.setRotation(transform->rotation + offset_rotation);
     sprite.setScale(scale);
-    renderTarget.draw(sprite);
+    renderTarget.draw(sprite, zIndex);
 }
 
 std::unique_ptr<Component> AnimationComponent::clone(GameObject& newGameObject)
 {
     return std::make_unique<AnimationComponent>(newGameObject, FrameTime*1000.f, CurrentFrameID,
-                                                textureName, offset_position, offset_rotation, scale, frame_width);
+                                                textureName, offset_position, offset_rotation, scale, frame_width, zIndex);
 }
 

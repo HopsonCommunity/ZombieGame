@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "components/Component.h"
+#include "../util/Renderer.h"
 
 class GameState;
 class CollisionInfo;
