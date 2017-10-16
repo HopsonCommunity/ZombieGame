@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Renderer.h"
 
 Renderer::Renderer(sf::RenderTarget& renderer)
@@ -46,7 +47,7 @@ bool Renderer::isInScreen(sf::FloatRect const& rect) const
     );
 }
 
-void Renderer::draw(sf::Shape const& shape, sf::RenderStates const& states)
+void Renderer::draw(sf::Shape& shape, sf::RenderStates const& states)
 {
     auto bounds = shape.getGlobalBounds();
     if(isInScreen(bounds))
@@ -102,7 +103,7 @@ void Renderer::draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::Pri
     }
 }
 
-void Renderer::drawHUD(sf::CircleShape const& shape, sf::RenderStates const& states)
+void Renderer::drawHUD(sf::CircleShape& shape, sf::RenderStates const& states)
 {
     sf::CircleShape s = shape;
     auto px = s.getPosition() / 100.f;
@@ -111,7 +112,7 @@ void Renderer::drawHUD(sf::CircleShape const& shape, sf::RenderStates const& sta
     m_renderer->draw(s, states);
 }
 
-void Renderer::drawHUD(sf::RectangleShape const& shape, sf::RenderStates const& states)
+void Renderer::drawHUD(sf::RectangleShape& shape, sf::RenderStates const& states)
 {
     sf::RectangleShape s = shape;
     auto px = s.getPosition() / 100.f;
@@ -120,7 +121,7 @@ void Renderer::drawHUD(sf::RectangleShape const& shape, sf::RenderStates const& 
     m_renderer->draw(s, states);
 }
 
-void Renderer::drawHUD(sf::ConvexShape const& shape, sf::RenderStates const& states)
+void Renderer::drawHUD(sf::ConvexShape& shape, sf::RenderStates const& states)
 {
     sf::ConvexShape s = shape;
     auto px = s.getPosition() / 100.f;
@@ -181,12 +182,17 @@ void Renderer::draw(std::pair<int, std::function<void(Renderer&)>> drawable)
 struct sortDrawables
 {
     template<class T>
-    bool operator()(T const &a, T const &b) const { return b.first > a.first; }
+    bool operator()(T const &a, T const &b) const { return (int)b.first > (int)a.first; }
 };
 
-void Renderer::render() {
+void Renderer::render()
+{
     std::sort(m_drawCallbacks.begin(), m_drawCallbacks.end(), sortDrawables());
+//    std::cout << "\n\n\n\n\n\n\n" << std::endl;
     for(std::pair<int, std::function<void(Renderer&)>>& drawable : m_drawCallbacks) {
         drawable.second(*this);
+
+//        if (drawable.first != 0) std::cout << (int)drawable.first << std::endl;
     }
+//    std::exit(0);
 }

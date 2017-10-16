@@ -11,7 +11,7 @@ class AnimationComponent : public Component
 public:
     AnimationComponent(GameObject& owner, nlohmann::json json);
     AnimationComponent  (GameObject& owner, float framesPerSecond, int currentFrameID, std::string textureName,
-                         sf::Vector2f offset_position, double offset_rotation, sf::Vector2f scale, int frame_width);
+                         sf::Vector2f offset_position, double offset_rotation, sf::Vector2f scale, int frame_width, int zIndex);
 
     void setup() override;
     void update(const sf::Time& deltaTime) override;
@@ -33,6 +33,7 @@ public:
     sf::IntRect rectSourceSprite;
     sf::Clock clock;
     int frame_direction;
+    int zIndex;
 
     TransformComponent* transform;
 };

@@ -30,15 +30,15 @@ public:
     sf::IntRect getViewport(sf::View const& view) const;
     sf::Vector2u getSize() const;
 
-    void draw(sf::Shape const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
+    void draw(sf::Shape& shape, sf::RenderStates const& states = sf::RenderStates::Default);
     void draw(sf::Sprite const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
     void draw(sf::Text const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
     void draw(sf::VertexArray const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
     void draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type, sf::RenderStates const& states = sf::RenderStates::Default);
 
-    void drawHUD(sf::CircleShape const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
-    void drawHUD(sf::RectangleShape const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
-    void drawHUD(sf::ConvexShape const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
+    void drawHUD(sf::CircleShape& shape, sf::RenderStates const& states = sf::RenderStates::Default);
+    void drawHUD(sf::RectangleShape& shape, sf::RenderStates const& states = sf::RenderStates::Default);
+    void drawHUD(sf::ConvexShape& shape, sf::RenderStates const& states = sf::RenderStates::Default);
     void drawHUD(sf::Sprite const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
     void drawHUD(sf::Text const& shape, sf::RenderStates const& states = sf::RenderStates::Default);
     void drawHUD(sf::VertexArray const& shape, sf::RenderStates const& states = sf::RenderStates::Default);

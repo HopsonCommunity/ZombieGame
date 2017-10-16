@@ -44,8 +44,8 @@ void FPSComponent::fixed_update(const sf::Time&)
 
 void FPSComponent::render(Renderer& renderTarget)
 {
-    renderTarget.draw({Renderer::ZIndex::FOREGROUND, [&](Renderer& renderer){
-        renderer.draw(text);
+    renderTarget.draw({Renderer::ZIndex::HUD, [&](Renderer& renderer){
+        renderer.drawHUD(text);
     }});
 }
 

@@ -4,7 +4,8 @@
             "texture": "grass",
             "offset_position": [8, 8],
             "offset_rotation": 0,
-            "scale": [5, 5]
+            "scale": [5, 5],
+            "zIndex": 0
         },
         {
             "componentType": "Transform",

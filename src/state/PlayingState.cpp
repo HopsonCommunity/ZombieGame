@@ -6,6 +6,7 @@
 #include "../gameobject/components/MouseComponent.h"
 #include "../gameobject/components/FPSComponent.h"
 #include "../gameobject/components/CameraComponent.h"
+#include "../gameobject/components/RendererComponent.h"
 
 PlayingState::PlayingState(Game& game)
 :   GameState   (game)

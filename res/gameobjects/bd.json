@@ -4,7 +4,8 @@
             "texture": "building",
             "offset_position": [16, 20],
             "offset_rotation": 0,
-            "scale": [2, 2]
+            "scale": [2, 2],
+            "zIndex": 259
         },
         {
             "componentType": "Transform",

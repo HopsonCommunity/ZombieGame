@@ -8,7 +8,8 @@ class RendererComponent : public Component
 {
 public:
     RendererComponent(GameObject& owner, nlohmann::json json);
-    RendererComponent(GameObject& owner, std::string textureName, sf::Vector2f offset_position, double offset_rotation, sf::Vector2f scale);
+    RendererComponent(GameObject& owner, std::string textureName, sf::Vector2f offset_position, double offset_rotation,
+                      sf::Vector2f scale, int zIndex);
 
     void setup() override;
     void update(const sf::Time& deltaTime) override;
@@ -24,6 +25,7 @@ public:
     sf::Vector2f offset_position;
     double offset_rotation;
     sf::Vector2f scale;
+    int zIndex = 0;
 
     TransformComponent* transform;
 };
