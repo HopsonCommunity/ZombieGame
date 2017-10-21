@@ -32,7 +32,11 @@ include_directories(deps/SFML/include)
 target_link_libraries(${PROJECT_NAME} sfml-network sfml-graphics sfml-window sfml-system sfml-audio)
 
 # GCC Arguments 
+if(CMAKE_COMPILER_IS_GNUXX)
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-pmf-conversions")
+elseif(CMAKE_COMPILER_IS_MSVC)
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wno-pmf-conversions")
+endif(CMAKE_COMPILER_IS_GNUXX)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 14
