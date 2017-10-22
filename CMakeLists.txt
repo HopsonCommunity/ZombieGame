@@ -11,8 +11,46 @@ file(GLOB_RECURSE SRC
     "src/*.hpp"
 )
 
+file(GLOB_RECURSE SRC_GAMEOBJECT
+    "src/gameobject/*.cpp"
+    "src/gameobject/*.h"
+    "src/gameobject/*.hpp"
+)
+
+file(GLOB_RECURSE SRC_RESOURCE
+    "src/resource/*.cpp"
+    "src/resource/*.h"
+    "src/resouce/*.hpp"
+)
+
+file(GLOB_RECURSE SRC_STATE
+    "src/state/*.cpp"
+    "src/state/*.h"
+    "src/state/*.hpp"
+)
+
+file(GLOB_RECURSE SRC_SYSTEMS
+    "src/systems/*.cpp"
+    "src/systems/*.h"
+    "src/systems/*.hpp"
+)
+
+file(GLOB_RECURSE SRC_UTIL
+    "src/util/*.cpp"
+    "src/util/*.h"
+    "src/util/*.hpp"
+)
+
 # Define the executable
-add_executable(${PROJECT_NAME} ${SRC})
+add_executable(${PROJECT_NAME} ${SRC} ${SRC_GAMEOBJECT} ${SRC_RESOURCE} ${SRC_STATE} ${SRC_SYSTEMS} ${SRC_UTIL})
+
+#Define the filters
+source_group("gameobject" FILES ${SRC_GAMEOBJECT})
+source_group("resources" FILES ${SRC_RESOURCE})
+source_group("state" FILES ${SRC_STATE})
+source_group("system" FILES ${SRC_SYSTEMS})
+source_group("util" FILES ${SRC_UTIL})
+
 # Copy res folder to executable on build
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
